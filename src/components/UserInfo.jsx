@@ -19,7 +19,12 @@ const UserInfo = () => {
 
   return (
     <div className="fixed  h-screen w-screen flex justify-center items-center z-50">
-      <div className="bg-[#1B2430] p-6 rounded-2xl shadow-xl w-80 text-center animate-fadeIn text-white border border-[#526D82]">
+      <div
+        className={`transition-all  ease-in
+           ${
+             animate ? "opacity-100 scale-100" : "opacity-0 scale-0"
+           } bg-[#1B2430] p-6 rounded-2xl shadow-xl w-80 text-center  text-white border border-[#526D82]`}
+      >
         <h2 className="text-xl font-semibold mb-4 text-[#DDE6ED]">
           Enter Your Name
         </h2>
