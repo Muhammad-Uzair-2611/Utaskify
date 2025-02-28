@@ -19,7 +19,8 @@ function App() {
 
   return (
     <>
-      {isScreenlarge && <Navbar />}
+      
+      {<Navbar />}
       <Addtask />
     </>
   );

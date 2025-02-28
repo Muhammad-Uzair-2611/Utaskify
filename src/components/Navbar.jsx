@@ -11,9 +11,9 @@ const Navbar = () => {
       setShowabout(false);
     }, 4000);
   };
-
+  const isVisible = localStorage.getItem("isVisible");
   return (
-    <nav className="bg-[#ffe0a1] border-b border-[#E6A157] text-[#2D2D2D] h-12 flex justify-between items-center px-3 relative">
+    <nav className={`${isVisible ? "" : "blur-xs"} bg-[#ffe0a1] border-b border-[#E6A157] text-[#2D2D2D] h-12 flex justify-between items-center px-3 relative`}>
       <div className="font-extrabold text-2xl cursor-pointer">UTask</div>
       <ul
         className="flex gap-x-5 text-[17px] font-bold [&>li]:cursor-pointer 
@@ -26,7 +26,7 @@ const Navbar = () => {
       </ul>
       {
         <div
-          className={`about transition-all duration-200  h-30 w-50 rounded-2xl p-2 bg-[#ffe0a1] shadow-md shadow-black fixed right-5 top-14 ${
+          className={`about z-20 transition-all duration-200  h-30 w-50 rounded-2xl p-2 bg-[#ffe0a1] shadow-md shadow-black fixed right-5 top-14 ${
             showAbout
               ? "opacity-100 scale-100"
               : "opacity-0 scale-95 pointer-events-none"

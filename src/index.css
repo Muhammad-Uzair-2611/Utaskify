@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  background-color: #fbeec1;
+  background-color: #3550a1;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .steel-gray {
   background-color: #1f1c2c;
 }
