@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap");
 :root {
   background-color: white;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -10,6 +10,14 @@
 }
 
 /* Custom CSS */
+
+.playwrite-it-moderna {
+  font-family: "Playwrite IT Moderna";
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .roboto-flex {
   font-family: "Roboto", sans-serif;
 }

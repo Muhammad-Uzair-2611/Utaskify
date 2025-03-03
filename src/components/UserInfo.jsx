@@ -23,21 +23,19 @@ const UserInfo = () => {
         className={`transition-all  ease-in
            ${
              animate ? "opacity-100 scale-100" : "opacity-0 scale-0"
-           } bg-[#1B2430] p-6 rounded-2xl shadow-xl w-80 text-center  text-white border border-[#526D82]`}
+           } bg-[#FFFDD0] p-6 rounded-2xl shadow-xl w-80 text-center  text-black shadow-neutral-400`}
       >
-        <h2 className="text-xl font-semibold mb-4 text-[#DDE6ED]">
-          Enter Your Name
-        </h2>
+        <h2 className="text-xl font-bold mb-4 text-black">Enter Your Name</h2>
         <input
           type="text"
-          className="w-full px-4 py-2 border border-[#526D82] bg-[#27374D] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9DB2BF] placeholder-[#9DB2BF]"
+          className="w-full px-4 py-2 Is bg-[#DBE2EF] text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9DB2BF] placeholder-[black]"
           placeholder="Your Name..."
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleChange}
         />
         <button
           onClick={handleClick}
-          className="mt-4 bg-[#526D82] text-white px-4 py-2 rounded-lg hover:bg-[#9DB2BF] transition"
+          className="mt-4 bg-[#5C9967] text-white px-4 py-2 rounded-lg transition hover:bg-[#4A7D54] cursor-pointer"
         >
           Submit
         </button>

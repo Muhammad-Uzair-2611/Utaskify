@@ -16,9 +16,9 @@ const Navbar = () => {
     <nav
       className={`${
         isVisible ? "" : "blur-xs"
-      } bg-[#FFFDD0] inter shadow-lg shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between items-center px-3 relative `}
+      } sm:bg-[#FFFDD0] inter sm:shadow-lg sm:shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between  items-center sm:px-3 px-10 sticky top-0 w-full z-10 `}
     >
-      <div className="font-extrabold text-2xl cursor-pointer">UTaskify</div>
+      <div className="font-extrabold text-2xl cursor-pointer"><img src="src/Logo/Logo.svg" alt="UTaskify" /></div>
       <ul
         className="flex gap-x-5 text-[17px] font-bold [&>li]:cursor-pointer 
         [&>li]:transition-all [&>li]:duration-200 transform [&>li]:hover:scale-105 [&>li]:select-none "

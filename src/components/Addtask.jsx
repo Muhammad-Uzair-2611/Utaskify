@@ -11,14 +11,17 @@ const Addtask = () => {
   //*States & Refs
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  const [show, setIsShow] = useState(false);
   const [showFinished, setShowfinished] = useState(true);
-  const categoryRef = useRef();
+  const taskRef = useRef(null);
 
   //*Variables
   let date = new Date();
   let month = date.getMonth() + 1;
   let day = date.getDate();
   let year = date.getFullYear();
+  let dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+  console.log(dayName);
   const fullDate = `${month}/${day}/${year}`;
 
   //*Effects
@@ -30,6 +33,15 @@ const Addtask = () => {
   useEffect(() => {
     savetoLS();
   }, [todos]);
+  useEffect(() => {
+    if (show) {
+      taskRef.current.style.overflowY = "scroll";
+      taskRef.current.style.padding = "16px 10px";
+    } else {
+      taskRef.current.style.overflowY = "hidden";
+      taskRef.current.style.padding = "16px";
+    }
+  }, [show]);
 
   //*Functions
   const savetoLS = () => {
@@ -93,9 +105,8 @@ const Addtask = () => {
   const toggleCheckbox = () => {
     setShowfinished(!showFinished);
   };
-  const handleDeleteAll = () => {
-    const confrim = confirm("Are You Sure You Wanna Delete All Tasks.?");
-    setTodos([]);
+  const showAll = () => {
+    setIsShow(!show);
   };
   const isVisible = localStorage.getItem("isVisible");
   const userName = localStorage.getItem("name") || "Anonymous";
@@ -108,14 +119,17 @@ const Addtask = () => {
       ) : (
         <div
           className={`${isVisible ? "" : "blur-xs"}
-           heading p-2 flex justify-center items-center font-bold text-4xl text-center text-black`}
+           heading p-2 mt-5 flex sm:justify-center items-center font-bold text-4xl text-black`}
         >
-          <SplitText text={`Hello, ${userName},`} className="font-bold" />
+          <SplitText
+            text={`Hello, ${userName},`}
+            className="font-bold text-[25px] sm:text-4xl"
+          />
           <ShinyText
             text="Start planning today!"
             disabled={false}
             speed={3}
-            className="custom-class"
+            className="custom-class text-[25px] sm:text-4xl"
           />
         </div>
       )}
@@ -123,42 +137,30 @@ const Addtask = () => {
         <div
           className={`${
             isVisible ? "" : "blur-xs"
-          } custom-scrollbar border border-black container w-[96vw]  sm:rounded-[5px] sm:h-[85vh] h-screen sm:mt-5 overflow-y-auto relative  overflow-auto transition-all`}
+          } custom-scrollbar container sm:w-[96vw] w-full  sm:rounded-[5px] sm:h-[85vh] h-screen sm:mt-5 overflow-y-auto relative  overflow-auto transition-all`}
         >
           {/* <section className="sticky z-10 top-11 line w-full h-0.5 bg-[#E6A157] "></section> */}
 
-          <div className="addTask  w-full flex my-5 gap-x-2 justify-center items-center">
+          <div className="w-full flex my-5 gap-x-2 justify-center items-center">
             <input
               type="text"
-              className="bg-[#DBE2EF] h-12 p-2 outline-0 rounded-[5px]"
-              placeholder="Title of the Task"
+              className="bg-[#DBE2EF] h-12 p-2 outline-0 rounded-[5px] hidden sm:block"
+              placeholder="Title (optional)"
             />
             <input
               value={todo}
               onChange={handleChange}
               onKeyDown={handleKeyPress}
               type="text"
-              className="bg-[#DBE2EF] p-2 h-12 outline-0 w-2/3 rounded-[5px]"
+              className="bg-[#DBE2EF] p-2 h-12 outline-0 w-2/3 rounded-[5px] hidden sm:block "
               placeholder="Detail of the Task"
             />
+            {/* <span className="text-5xl playwrite-it-moderna text-red-500">
+              {dayName}
+            </span> */}
             <button className="flex justify-center items-center bg-[#5C9967] h-12 p-2 text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl">
               <FaPlus />
             </button>
-
-            {/* <input
-            value={todo}
-            type="text"
-            onChange={handleChange}
-            onKeyDown={handleKeyPress}
-            className=" outline-0 placeholder:text-[#2D2D2D] bg-[#ffe0a1] text-[#2D2D2D] rounded-[20px] h-8 px-2 w-3/4 text-wrap"
-            placeholder="Type Here.."
-          /> */}
-            {/* <button
-            onClick={handleAdd}
-            className="bg-[#ffc655] text-[#2D2D2D] rounded-[10px] py-2 px-4 font-bold cursor-pointer transform hover:scale-102 hover:bg-[#ec9e00] transition-all"
-          >
-            Add
-          </button> */}
           </div>
           {/* <span className="text-[#2D2D2D] mx-8 ">
           <input
@@ -170,76 +172,29 @@ const Addtask = () => {
           Show Finished Tasks
         </span> */}
 
-          {/* <section className="line w-full h-0.5 bg-[#E6A157] mt-1"></section> */}
-          {todos.map((item) => {
-            return (
-              (showFinished || !item.Iscompleted) && (
-                <div
-                  key={item.id}
-                  className="p-4 flex gap-x-3 justify-between items-center mx-1 my-3  bg-[#ffe0a1] rounded-2xl text-[#2D2D2D] border-b-2 border-[#E6A157] "
-                >
-                  <div className="flex gap-x-2  w-[85%]">
-                    <input
-                      name={item.id}
-                      type="checkbox"
-                      onChange={handleCheckbox}
-                      checked={item.Iscompleted}
-                      className="accent-[#ff931f]"
-                    />
-                    <div className="w-full">
-                      <span className="text-[14px]">{item.date}</span>
-                      {item.IsEditable ? (
-                        <input
-                          name={item.id}
-                          autoFocus
-                          value={item.task}
-                          onBlur={handleBlur}
-                          onChange={handleEditedTask}
-                          className={`text-[#2D2D2D] font-bold outline-0 w-full text-wrap `}
-                        />
-                      ) : (
-                        <li
-                          className={`${
-                            item.Iscompleted ? "line-through" : ""
-                          } decoration-[#ec9e00] decoration-3 text-[#2D2D2D] font-bold list-none max-w-[95%] break-words whitespace-normal`}
-                        >
-                          {item.task}
-                        </li>
-                      )}
-                    </div>
-                  </div>
+          <div
+            ref={taskRef}
+            className="grid grid-cols-2 gap-3 p-4 overflow-hidden h-90"
+          >
+            {todos.map((item) => {
+              return (
+                (showFinished || !item.Iscompleted) && (
                   <div
-                    className="icons flex justify-evenly items-center text-[20px] text-[#ffad08] [&>span]:cursor-pointer gap-x-2 
-                [&>span]:transition-all 
-              [&>span]:hover:text-[#ec9e00]"
-                  >
-                    <span onClick={(e) => handleEdit(e, item.id)}>
-                      {!item.Iscompleted ? (
-                        item.IsEditable ? (
-                          <FaCheck />
-                        ) : (
-                          <FaEdit />
-                        )
-                      ) : (
-                        " "
-                      )}
-                    </span>
-                    <span onClick={(e) => handleDelete(e, item.id)}>
-                      <MdDelete />
-                    </span>
-                  </div>
-                </div>
-              )
-            );
-          })}
-          {/* <section className="line w-full h-0.5 bg-white mt-1 sticky bottom-14"></section> */}
+                    key={item.id}
+                    className="bg-[#F0D1A8] h-40 rounded-[5px] w-full flex justify-between items-center p-4 border-b-2 border-[#E6A157] text-[#2D2D2D]"
+                  ></div>
+                )
+              );
+            })}
+          </div>
+
           {todos.length > 3 && (
-            <div className="flex justify-center  sticky bottom-0 p-2 w-full">
+            <div className="flex justify-center sticky bottom-0 p-2 w-full">
               <button
-                className="bg-[#ffc655] text-[#2D2D2D] rounded-[10px] px-2 py-3 font-bold cursor-pointer transform hover:scale-102 hover:bg-[#ec9e00] transition-all"
-                onClick={handleDeleteAll}
+                className="bg-[#5C9967] text-[white] rounded-[10px] px-2 py-3 font-bold cursor-pointer transform hover:scale-102 hover:bg-[#4A7D54] transition-all"
+                onClick={showAll}
               >
-                Delete All
+                {show ? "Show Less" : "Show All"}
               </button>
             </div>
           )}
