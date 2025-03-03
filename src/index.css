@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  background-color: #3550a1;
+  background-color: white;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -9,6 +9,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom CSS */
+.roboto-flex {
+  font-family: "Roboto", sans-serif;
+}
+.inter {
+  font-family: "Inter", sans-serif;
+}
 .steel-gray {
   background-color: #1f1c2c;
 }

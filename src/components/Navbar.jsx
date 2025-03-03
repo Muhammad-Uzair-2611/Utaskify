@@ -13,15 +13,16 @@ const Navbar = () => {
   };
   const isVisible = localStorage.getItem("isVisible");
   return (
-    <nav className={`${isVisible ? "" : "blur-xs"} bg-[#ffe0a1] border-b border-[#E6A157] text-[#2D2D2D] h-12 flex justify-between items-center px-3 relative`}>
-      <div className="font-extrabold text-2xl cursor-pointer">UTask</div>
+    <nav
+      className={`${
+        isVisible ? "" : "blur-xs"
+      } bg-[#FFFDD0] inter shadow-lg shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between items-center px-3 relative `}
+    >
+      <div className="font-extrabold text-2xl cursor-pointer">UTaskify</div>
       <ul
         className="flex gap-x-5 text-[17px] font-bold [&>li]:cursor-pointer 
         [&>li]:transition-all [&>li]:duration-200 transform [&>li]:hover:scale-105 [&>li]:select-none "
       >
-        <li>
-          <a href="./index.html">Home</a>
-        </li>
         <li onClick={handleaboutClick}>About Us</li>
       </ul>
       {

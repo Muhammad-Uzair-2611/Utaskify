@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FaEdit, FaCheck } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
-import BlurText from "./BlurText";
+import SplitText from "./SplitText";
+import ShinyText from "./ShinyText";
 import UserInfo from "./UserInfo";
 
 const Addtask = () => {
-  //*States
+  //*States & Refs
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const [showFinished, setShowfinished] = useState(true);
+  const categoryRef = useRef();
 
   //*Variables
   let date = new Date();
@@ -36,6 +39,7 @@ const Addtask = () => {
   const handleKeyPress = (e) => {
     e.key == "Enter" && handleAdd();
   };
+
   const handleAdd = () => {
     todo != ""
       ? setTodos([
@@ -94,36 +98,69 @@ const Addtask = () => {
     setTodos([]);
   };
   const isVisible = localStorage.getItem("isVisible");
+  const userName = localStorage.getItem("name") || "Anonymous";
 
   return (
     <>
       {!isVisible ? <UserInfo /> : ""}
-      <div
-        className={
-          `${isVisible ? "" : "blur-xs"} custom-scrollbar bg-[#3550A1] container sm:mx-auto  lg:max-w-2/4  sm:max-w-2/3 w-full sm:rounded-2xl sm:h-[85vh] h-screen sm:mt-5 overflow-y-auto relative shadow-md  shadow-neutral-500 overflow-auto`}
-      >
-        <div className="heading sticky top-0 p-2 flex justify-center items-center font-bold text-2xl text-center text-white bg-[#3550A1] z-5 ">
-          <BlurText text="UTask Your Todo List Manager" delay={100} />
+      {!isVisible ? (
+        ""
+      ) : (
+        <div
+          className={`${isVisible ? "" : "blur-xs"}
+           heading p-2 flex justify-center items-center font-bold text-4xl text-center text-black`}
+        >
+          <SplitText text={`Hello, ${userName},`} className="font-bold" />
+          <ShinyText
+            text="Start planning today!"
+            disabled={false}
+            speed={3}
+            className="custom-class"
+          />
         </div>
-        <section className="sticky z-10 top-11 line w-full h-0.5 bg-[#E6A157] "></section>
+      )}
+      <div className="h-screen w-full flex justify-center items-start">
+        <div
+          className={`${
+            isVisible ? "" : "blur-xs"
+          } custom-scrollbar border border-black container w-[96vw]  sm:rounded-[5px] sm:h-[85vh] h-screen sm:mt-5 overflow-y-auto relative  overflow-auto transition-all`}
+        >
+          {/* <section className="sticky z-10 top-11 line w-full h-0.5 bg-[#E6A157] "></section> */}
 
-        <div className="addTask w-full flex my-5 gap-x-2 justify-center items-center">
-          <input
+          <div className="addTask  w-full flex my-5 gap-x-2 justify-center items-center">
+            <input
+              type="text"
+              className="bg-[#DBE2EF] h-12 p-2 outline-0 rounded-[5px]"
+              placeholder="Title of the Task"
+            />
+            <input
+              value={todo}
+              onChange={handleChange}
+              onKeyDown={handleKeyPress}
+              type="text"
+              className="bg-[#DBE2EF] p-2 h-12 outline-0 w-2/3 rounded-[5px]"
+              placeholder="Detail of the Task"
+            />
+            <button className="flex justify-center items-center bg-[#5C9967] h-12 p-2 text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl">
+              <FaPlus />
+            </button>
+
+            {/* <input
             value={todo}
             type="text"
             onChange={handleChange}
             onKeyDown={handleKeyPress}
             className=" outline-0 placeholder:text-[#2D2D2D] bg-[#ffe0a1] text-[#2D2D2D] rounded-[20px] h-8 px-2 w-3/4 text-wrap"
             placeholder="Type Here.."
-          />
-          <button
+          /> */}
+            {/* <button
             onClick={handleAdd}
             className="bg-[#ffc655] text-[#2D2D2D] rounded-[10px] py-2 px-4 font-bold cursor-pointer transform hover:scale-102 hover:bg-[#ec9e00] transition-all"
           >
             Add
-          </button>
-        </div>
-        <span className="text-[#2D2D2D] mx-8 ">
+          </button> */}
+          </div>
+          {/* <span className="text-[#2D2D2D] mx-8 ">
           <input
             type="checkbox"
             checked={showFinished}
@@ -131,81 +168,82 @@ const Addtask = () => {
             className="accent-[#ff931f]"
           />{" "}
           Show Finished Tasks
-        </span>
+        </span> */}
 
-        <section className="line w-full h-0.5 bg-[#E6A157] mt-1"></section>
-        {todos.map((item) => {
-          return (
-            (showFinished || !item.Iscompleted) && (
-              <div
-                key={item.id}
-                className="p-4 flex gap-x-3 justify-between items-center mx-1 my-3  bg-[#ffe0a1] rounded-2xl text-[#2D2D2D] border-b-2 border-[#E6A157] "
-              >
-                <div className="flex gap-x-2  w-[85%]">
-                  <input
-                    name={item.id}
-                    type="checkbox"
-                    onChange={handleCheckbox}
-                    checked={item.Iscompleted}
-                    className="accent-[#ff931f]"
-                  />
-                  <div className="w-full">
-                    <span className="text-[14px]">{item.date}</span>
-                    {item.IsEditable ? (
-                      <input
-                        name={item.id}
-                        autoFocus
-                        value={item.task}
-                        onBlur={handleBlur}
-                        onChange={handleEditedTask}
-                        className={`text-[#2D2D2D] font-bold outline-0 w-full text-wrap `}
-                      />
-                    ) : (
-                      <li
-                        className={`${
-                          item.Iscompleted ? "line-through" : ""
-                        } decoration-[#ec9e00] decoration-3 text-[#2D2D2D] font-bold list-none max-w-[95%] break-words whitespace-normal`}
-                      >
-                        {item.task}
-                      </li>
-                    )}
-                  </div>
-                </div>
+          {/* <section className="line w-full h-0.5 bg-[#E6A157] mt-1"></section> */}
+          {todos.map((item) => {
+            return (
+              (showFinished || !item.Iscompleted) && (
                 <div
-                  className="icons flex justify-evenly items-center text-[20px] text-[#ffad08] [&>span]:cursor-pointer gap-x-2 
+                  key={item.id}
+                  className="p-4 flex gap-x-3 justify-between items-center mx-1 my-3  bg-[#ffe0a1] rounded-2xl text-[#2D2D2D] border-b-2 border-[#E6A157] "
+                >
+                  <div className="flex gap-x-2  w-[85%]">
+                    <input
+                      name={item.id}
+                      type="checkbox"
+                      onChange={handleCheckbox}
+                      checked={item.Iscompleted}
+                      className="accent-[#ff931f]"
+                    />
+                    <div className="w-full">
+                      <span className="text-[14px]">{item.date}</span>
+                      {item.IsEditable ? (
+                        <input
+                          name={item.id}
+                          autoFocus
+                          value={item.task}
+                          onBlur={handleBlur}
+                          onChange={handleEditedTask}
+                          className={`text-[#2D2D2D] font-bold outline-0 w-full text-wrap `}
+                        />
+                      ) : (
+                        <li
+                          className={`${
+                            item.Iscompleted ? "line-through" : ""
+                          } decoration-[#ec9e00] decoration-3 text-[#2D2D2D] font-bold list-none max-w-[95%] break-words whitespace-normal`}
+                        >
+                          {item.task}
+                        </li>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className="icons flex justify-evenly items-center text-[20px] text-[#ffad08] [&>span]:cursor-pointer gap-x-2 
                 [&>span]:transition-all 
               [&>span]:hover:text-[#ec9e00]"
-                >
-                  <span onClick={(e) => handleEdit(e, item.id)}>
-                    {!item.Iscompleted ? (
-                      item.IsEditable ? (
-                        <FaCheck />
+                  >
+                    <span onClick={(e) => handleEdit(e, item.id)}>
+                      {!item.Iscompleted ? (
+                        item.IsEditable ? (
+                          <FaCheck />
+                        ) : (
+                          <FaEdit />
+                        )
                       ) : (
-                        <FaEdit />
-                      )
-                    ) : (
-                      " "
-                    )}
-                  </span>
-                  <span onClick={(e) => handleDelete(e, item.id)}>
-                    <MdDelete />
-                  </span>
+                        " "
+                      )}
+                    </span>
+                    <span onClick={(e) => handleDelete(e, item.id)}>
+                      <MdDelete />
+                    </span>
+                  </div>
                 </div>
-              </div>
-            )
-          );
-        })}
-        {/* <section className="line w-full h-0.5 bg-white mt-1 sticky bottom-14"></section> */}
-        {todos.length > 3 && (
-          <div className="flex justify-center  sticky bottom-0 p-2 w-full">
-            <button
-              className="bg-[#ffc655] text-[#2D2D2D] rounded-[10px] px-2 py-3 font-bold cursor-pointer transform hover:scale-102 hover:bg-[#ec9e00] transition-all"
-              onClick={handleDeleteAll}
-            >
-              Delete All
-            </button>
-          </div>
-        )}
+              )
+            );
+          })}
+          {/* <section className="line w-full h-0.5 bg-white mt-1 sticky bottom-14"></section> */}
+          {todos.length > 3 && (
+            <div className="flex justify-center  sticky bottom-0 p-2 w-full">
+              <button
+                className="bg-[#ffc655] text-[#2D2D2D] rounded-[10px] px-2 py-3 font-bold cursor-pointer transform hover:scale-102 hover:bg-[#ec9e00] transition-all"
+                onClick={handleDeleteAll}
+              >
+                Delete All
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
