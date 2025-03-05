@@ -8,7 +8,6 @@ import SplitText from "./SplitText";
 import ShinyText from "./ShinyText";
 import UserInfo from "./UserInfo";
 import { useForm } from "react-hook-form";
-import { form } from "framer-motion/client";
 
 const Addtask = () => {
   //*States & Refs
@@ -18,18 +17,22 @@ const Addtask = () => {
   const [show, setIsShow] = useState(false);
   const [showFinished, setShowfinished] = useState(true);
   const taskRef = useRef(null);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  //*Variables
 
+  //*Variables
   let date = new Date();
   let month = date.getMonth() + 1;
   let day = date.getDate();
   let year = date.getFullYear();
   let dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+
+  //*Constants
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const isVisible = localStorage.getItem("isVisible");
+  const userName = localStorage.getItem("name") || "Anonymous";
   const fullDate = `${month}/${day}/${year}`;
 
   //*Effects
@@ -58,7 +61,7 @@ const Addtask = () => {
     localStorage.setItem("todos", JSON.stringify(todos));
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     e.key == "Enter" && handleAdd();
   };
 
@@ -127,8 +130,6 @@ const Addtask = () => {
   const showAll = () => {
     setIsShow(!show);
   };
-  const isVisible = localStorage.getItem("isVisible");
-  const userName = localStorage.getItem("name") || "Anonymous";
 
   return (
     <>
@@ -138,17 +139,17 @@ const Addtask = () => {
       ) : (
         <div
           className={`${isVisible ? "" : "blur-xs"}
-           heading p-2 mt-5 flex sm:justify-center items-center font-bold text-4xl text-black`}
+           heading p-2 px-4 sm:px-2 mt-5 flex flex-col sm:flex-row sm:justify-center sm:items-center items-start font-bold text-4xl text-black`}
         >
           <SplitText
             text={`Hello, ${userName},`}
-            className="font-bold text-[25px] sm:text-4xl"
+            className="font-bold text-[30px] mb-2 sm:mb-0 sm:text-4xl"
           />
           <ShinyText
             text="Start planning today!"
             disabled={false}
             speed={3}
-            className="custom-class text-[25px] sm:text-4xl"
+            className="shiny-text-white_Black text-[25px] sm:text-4xl"
           />
         </div>
       )}
@@ -156,12 +157,11 @@ const Addtask = () => {
         <div
           className={`${
             isVisible ? "" : "blur-xs"
-          }  container sm:w-[96vw] w-full  sm:rounded-[5px]  h-screen sm:mt-5 overflow-y-auto relative  overflow-visible transition-all`}
+          }  container sm:w-[96vw] w-full  sm:rounded-[5px]  h-auto sm:mt-5 overflow-y-hidden relative  overflow-visible transition-all px-3 sm:px-0`}
         >
-          {/* <section className="sticky z-10 top-11 line w-full h-0.5 bg-[#E6A157] "></section> */}
           <form onSubmit={handleSubmit(() => handleAdd)}>
-            <div className="w-full flex my-5 gap-x-2 justify-center items-center">
-              <div className="flex flex-col relative">
+            <div className=" flex sm:justify-center sm:gap-x-2 justify-between items-center p-4 mt-4 sm:mt-0 sm:px-0 ">
+              <div className="sm:flex flex-col relative hidden">
                 <input
                   {...register("title", {
                     maxLength: { value: 25, message: "Title is too long" },
@@ -169,7 +169,7 @@ const Addtask = () => {
                   value={title}
                   onChange={handleTitle}
                   type="text"
-                  className="bg-[#DBE2EF] h-12 p-2 outline-0 rounded-[5px] hidden sm:block"
+                  className="bg-[#DBE2EF] h-12 p-2 outline-0 rounded-[5px] "
                   placeholder="Title (optional)"
                 />
                 {errors.title && (
@@ -178,26 +178,30 @@ const Addtask = () => {
                   </span>
                 )}
               </div>
-              <div className="flex flex-col relative w-2/3">
+              <div className="flex-col relative w-2/3 hidden sm:flex">
                 <input
                   {...register("task", {
                     maxLength: { value: 78, message: "Task is to Long" },
                   })}
                   value={todo}
                   onChange={handleDesc}
+                  onKeyDown={handleKeyDown}
                   type="text"
-                  className="bg-[#DBE2EF] p-2 h-12 outline-0  rounded-[5px] hidden sm:block "
+                  className="bg-[#DBE2EF] p-2 h-12 outline-0  rounded-[5px]  "
                   placeholder="Detail of the Task"
                 />
                 {errors.task && (
-                  <span className="text-red-500 font-semibold text-sm absolute -bottom-6">
+                  <span className="text-red-500  font-semibold text-sm absolute -bottom-6">
                     Task is too Long
                   </span>
                 )}
               </div>
-              {/* <span className="text-5xl playwrite-it-moderna text-red-500">
-              {dayName}
-            </span> */}
+              <ShinyText
+                text={dayName}
+                disabled={false}
+                speed={3}
+                className="shiny-text-white_Red text-[40px] italic block sm:hidden"
+              />
               <button
                 onClick={handleAdd}
                 className="flex justify-center items-center bg-[#5C9967] h-12 p-2 text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
@@ -206,42 +210,36 @@ const Addtask = () => {
               </button>
             </div>
           </form>
-          {/* <span className="text-[#2D2D2D] mx-8 ">
-          <input
-            type="checkbox"
-            checked={showFinished}
-            onChange={toggleCheckbox}
-            className="accent-[#ff931f]"
-          />{" "}
-          Show Finished Tasks
-        </span> */}
-
           <div
             ref={taskRef}
-            className="grid grid-cols-2 gap-3 p-4 overflow-hidden h-90 custom-scrollbar"
+            className="grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 overflow-hidden h-90 custom-scrollbar"
           >
             {todos.map((item) => {
               return (
                 <div
                   key={item.id}
-                  className="bg-[#F0D1A8] h-40 rounded-[5px] w-full flex justify-between items-center py-2 px-3 border-b-2 border-[#E6A157] text-[#2D2D2D] relative "
+                  className="bg-[#F0D1A8] h-40 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-5 sm:shadow-lg  text-[#2D2D2D] relative "
                 >
                   {item.Iscompleted ? (
-                    
-                    <div className="w-full h-full absolute left-0 flex justify-center items-center flex-col gap-y-1 font-bold text-3xl text-[#3A3A36]">
+                    <div className="w-full h-full absolute left-0 flex justify-center items-center flex-col gap-y-1 font-bold md:text-3xl text-2xl text-[#3A3A36]">
                       Completed
                       <button
-                        className="px-2 py-1 text-white cursor-pointer
-                       bg-[#5C9967] rounded-lg text-lg hover:bg-[#4A7D54]"
+                        onClick={handleCheckbox}
+                        id={item.id}
+                        className="px-2 md:font-semibold font-medium py-1 text-white cursor-pointer
+                       bg-[#5C9967] rounded-lg md:text-lg text-[15px] hover:bg-[#4A7D54]"
                       >
                         Undo
                       </button>
+                      <span className="md:text-2xl text-lg font-medium">
+                        Complete Date:{item.date}
+                      </span>
                     </div>
                   ) : (
                     <>
                       <div className="h-full w-4/4 flex flex-col justify-between  ">
                         <div className=" flex flex-col  h-full">
-                          <span className="title text-3xl font-bold text-[#3A3A36]">
+                          <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
                             {item.title}
                           </span>
 
@@ -299,17 +297,43 @@ const Addtask = () => {
               );
             })}
           </div>
-
           {todos.length >= 5 && (
-            <div className="flex justify-center sticky bottom-0 p-2 w-full">
+            <div className="flex justify-center items-center p-2 w-full">
               <button
-                className="bg-[#5C9967] text-[white] rounded-[10px] px-2 py-3 font-bold cursor-pointer transform hover:scale-102 hover:bg-[#4A7D54] transition-all"
+                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
                 onClick={showAll}
               >
                 {show ? "Show Less" : "Show All"}
               </button>
             </div>
           )}
+          <div className="px-4 flex mb-10 gap-x-3">
+            <div className="comTask w-30 flex-col rounded-2xl bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
+              <span className=" text-center font-bold">Completed Tasks</span>
+              <span className="text-4xl font-extrabold">04</span>
+            </div>
+            <div className="penTask w-30 flex-col rounded-2xl bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
+              <span className=" text-center font-bold">Pending Tasks</span>
+              <span className="text-4xl font-extrabold">06</span>
+            </div>
+            <div className="totTask flex justify-between w-[80%] bg-white  rounded-2xl px-5 py-3 shadow-md shadow-neutral-500 items-center">
+              <div className="flex  h-full flex-col">
+                <span className="font-semibold text-[#30a1c4] text-lg">
+                  Tasks created
+                </span>
+                <span className="text-4xl font-bold">1,500</span>
+              </div>
+              <div className="max-w-90  max-h-20 overflow-clip">
+                <ShinyText
+                  text="Your future is created by what you do today, not tomorrow not tomorrow"
+                  disabled={false}
+                  speed={3}
+                  className="shiny-text-white_Black text-[22px] font-bold"
+                />
+                <span className="text-[22px] font-bold text-[#3A3A36]"></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
