@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav
       className={`${
         isVisible ? "" : "blur-xs"
-      } sm:bg-[#FFFDD0] bg-white inter sm:shadow-lg  shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between  items-center sm:px-3 px-10 sticky top-0 w-full z-10 `}
+      } sm:bg-[#FFFDD0] bg-white inter sm:shadow-md  shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between  items-center sm:px-3 px-10 sticky top-0 w-full z-10 `}
     >
       <div className="font-extrabold text-2xl cursor-pointer">
         <img src="src/Logo/Logo.svg" alt="UTaskify" />
@@ -29,7 +29,7 @@ const Navbar = () => {
       </ul>
       {
         <div
-          className={`about z-20 transition-all duration-200  h-30 w-50 rounded-2xl p-2 bg-[#ffe0a1] shadow-md shadow-black fixed right-5 top-14 ${
+          className={`about z-20 transition-all duration-200  h-30 w-50 rounded-2xl p-2 bg-[#FFFDD0] shadow-md shadow-black fixed right-5 top-14 ${
             showAbout
               ? "opacity-100 scale-100"
               : "opacity-0 scale-95 pointer-events-none"

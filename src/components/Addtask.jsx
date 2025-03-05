@@ -8,6 +8,7 @@ import SplitText from "./SplitText";
 import ShinyText from "./ShinyText";
 import UserInfo from "./UserInfo";
 import { useForm } from "react-hook-form";
+import { filter } from "framer-motion/client";
 
 const Addtask = () => {
   //*States & Refs
@@ -16,6 +17,8 @@ const Addtask = () => {
   const [todos, setTodos] = useState([]);
   const [show, setIsShow] = useState(false);
   const [showFinished, setShowfinished] = useState(true);
+  const [penTasks, setPentasks] = useState(0);
+  const [comTasks, setComtasks] = useState(0);
   const taskRef = useRef(null);
 
   //*Variables
@@ -42,6 +45,7 @@ const Addtask = () => {
   }, []);
   useEffect(() => {
     savetoLS();
+    filter_Tasks();
   }, [todos]);
   useEffect(() => {
     if (show) {
@@ -90,7 +94,6 @@ const Addtask = () => {
   };
   const handleCheckbox = (e) => {
     const id = e.currentTarget.id;
-    console.log(id);
     const index = todos.findIndex((item) => item.id === id);
     todos[index].Iscompleted = !todos[index].Iscompleted;
     const newtodos = [...todos];
@@ -129,6 +132,12 @@ const Addtask = () => {
   };
   const showAll = () => {
     setIsShow(!show);
+  };
+  const filter_Tasks = () => {
+    const penTasks = todos.filter((item) => item.Iscompleted != true);
+    const comTasks = todos.filter((item) => item.Iscompleted == true);
+    setPentasks(penTasks.length);
+    setComtasks(comTasks.length);
   };
 
   return (
@@ -214,88 +223,94 @@ const Addtask = () => {
             ref={taskRef}
             className="grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 overflow-hidden h-90 custom-scrollbar"
           >
-            {todos.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className="bg-[#F0D1A8] h-40 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-5 sm:shadow-lg  text-[#2D2D2D] relative "
-                >
-                  {item.Iscompleted ? (
-                    <div className="w-full h-full absolute left-0 flex justify-center items-center flex-col gap-y-1 font-bold md:text-3xl text-2xl text-[#3A3A36]">
-                      Completed
-                      <button
-                        onClick={handleCheckbox}
-                        id={item.id}
-                        className="px-2 md:font-semibold font-medium py-1 text-white cursor-pointer
+            {todos.length > 0 ? (
+              todos.map((item) => {
+                return (
+                  <div
+                    key={item.id}
+                    className="bg-[#F0D1A8] h-40 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-5 sm:shadow-lg  text-[#2D2D2D] relative "
+                  >
+                    {item.Iscompleted ? (
+                      <div className="w-full h-full absolute left-0 flex justify-center items-center flex-col gap-y-1 font-bold md:text-3xl text-2xl text-[#3A3A36]">
+                        Completed
+                        <button
+                          onClick={handleCheckbox}
+                          id={item.id}
+                          className="px-2 md:font-semibold font-medium py-1 text-white cursor-pointer
                        bg-[#5C9967] rounded-lg md:text-lg text-[15px] hover:bg-[#4A7D54]"
-                      >
-                        Undo
-                      </button>
-                      <span className="md:text-2xl text-lg font-medium">
-                        Complete Date:{item.date}
-                      </span>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="h-full w-4/4 flex flex-col justify-between  ">
-                        <div className=" flex flex-col  h-full">
-                          <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
-                            {item.title}
-                          </span>
-
-                          {item.IsEditable ? (
-                            <input
-                              name={item.id}
-                              autoFocus
-                              value={item.task}
-                              // onBlur={handleBlur}
-                              onChange={handleEditedTask}
-                              className={`text-[#3A3A36] outline-0 w-full text-wrap `}
-                            />
-                          ) : (
-                            <span
-                              className={`${
-                                item.Iscompleted ? "line-through" : ""
-                              } decoration-[#ec9e00] decoration-3 text-[#3A3A36] max-w-[95%] break-words whitespace-normal`}
-                            >
-                              {item.task}
-                            </span>
-                          )}
-                        </div>
-                        <div className="">
-                          <span className="text-[22px] font-bold text-[#3A3A36]">
-                            Start Data: {item.date}
-                          </span>
-                        </div>
+                        >
+                          Undo
+                        </button>
+                        <span className="md:text-2xl text-lg font-medium">
+                          Complete Date:{item.date}
+                        </span>
                       </div>
-                      <div
-                        className="buttons flex flex-col h-full p-2 justify-between items-center gap-y-2 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
+                    ) : (
+                      <>
+                        <div className="h-full w-4/4 flex flex-col justify-between  ">
+                          <div className=" flex flex-col  h-full">
+                            <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
+                              {item.title}
+                            </span>
+
+                            {item.IsEditable ? (
+                              <input
+                                name={item.id}
+                                autoFocus
+                                value={item.task}
+                                // onBlur={handleBlur}
+                                onChange={handleEditedTask}
+                                className={`text-[#3A3A36] outline-0 w-full text-wrap `}
+                              />
+                            ) : (
+                              <span
+                                className={`${
+                                  item.Iscompleted ? "line-through" : ""
+                                } decoration-[#ec9e00] decoration-3 text-[#3A3A36] max-w-[95%] break-words whitespace-normal`}
+                              >
+                                {item.task}
+                              </span>
+                            )}
+                          </div>
+                          <div className="">
+                            <span className="text-[22px] font-bold text-[#3A3A36]">
+                              Start Data: {item.date}
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className="buttons flex flex-col h-full p-2 justify-between items-center gap-y-2 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
                   //   [&>span]:transition-all
                   // [&>span]:hover:text-[#494940]"
-                      >
-                        <span id={item.id} onClick={handleCheckbox}>
-                          <SiTicktick />
-                        </span>
-                        <span onClick={(e) => handleEdit(e, item.id)}>
-                          {!item.Iscompleted ? (
-                            item.IsEditable ? (
-                              <FaCheck />
+                        >
+                          <span id={item.id} onClick={handleCheckbox}>
+                            <SiTicktick />
+                          </span>
+                          <span onClick={(e) => handleEdit(e, item.id)}>
+                            {!item.Iscompleted ? (
+                              item.IsEditable ? (
+                                <FaCheck />
+                              ) : (
+                                <FaEdit />
+                              )
                             ) : (
-                              <FaEdit />
-                            )
-                          ) : (
-                            " "
-                          )}
-                        </span>
-                        <span onClick={(e) => handleDelete(e, item.id)}>
-                          <MdDelete />
-                        </span>
-                      </div>
-                    </>
-                  )}
-                </div>
-              );
-            })}
+                              " "
+                            )}
+                          </span>
+                          <span onClick={(e) => handleDelete(e, item.id)}>
+                            <MdDelete />
+                          </span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              })
+            ) : (
+              <span className="px-5 text-3xl text-[#2D2D2D] font-bold">
+                No Task to Display...
+              </span>
+            )}
           </div>
           {todos.length >= 5 && (
             <div className="flex justify-center items-center p-2 w-full">
@@ -310,18 +325,18 @@ const Addtask = () => {
           <div className="px-4 flex mb-10 gap-x-3">
             <div className="comTask w-30 flex-col rounded-2xl bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
               <span className=" text-center font-bold">Completed Tasks</span>
-              <span className="text-4xl font-extrabold">04</span>
+              <span className="text-4xl font-extrabold">{comTasks}</span>
             </div>
             <div className="penTask w-30 flex-col rounded-2xl bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
               <span className=" text-center font-bold">Pending Tasks</span>
-              <span className="text-4xl font-extrabold">06</span>
+              <span className="text-4xl font-extrabold">{penTasks}</span>
             </div>
             <div className="totTask flex justify-between w-[80%] bg-white  rounded-2xl px-5 py-3 shadow-md shadow-neutral-500 items-center">
               <div className="flex  h-full flex-col">
                 <span className="font-semibold text-[#30a1c4] text-lg">
                   Tasks created
                 </span>
-                <span className="text-4xl font-bold">1,500</span>
+                <span className="text-4xl font-bold">{todos.length}</span>
               </div>
               <div className="max-w-90  max-h-20 overflow-clip">
                 <ShinyText
