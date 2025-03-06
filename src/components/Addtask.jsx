@@ -166,7 +166,7 @@ const Addtask = () => {
         <div
           className={`${
             isVisible ? "" : "blur-xs"
-          }  container sm:w-[96vw] w-full  sm:rounded-[5px]  h-auto sm:mt-5 overflow-y-hidden relative  overflow-visible transition-all px-3 sm:px-0`}
+          }  xl:max-w-3/4 w-4/4 sm:w-[96vw] sm:rounded-[5px]  h-auto sm:mt-5 overflow-y-hidden relative  overflow-visible transition-all px-3 sm:px-0`}
         >
           <form onSubmit={handleSubmit(() => handleAdd)}>
             <div className=" flex sm:justify-center sm:gap-x-2 justify-between items-center p-4 mt-4 sm:mt-0 sm:px-0 ">
@@ -324,34 +324,36 @@ const Addtask = () => {
               </button>
             </div>
           )}
-          <div className="px-4 flex mb-10 gap-x-3">
-            <div className="comTask w-30 flex-col rounded-2xl bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
-              <span className=" text-center font-bold">Completed Tasks</span>
-              <span className="text-4xl font-extrabold">
-                {comTasks <= 9 ? "0" + comTasks : comTasks}
-              </span>
-            </div>
-            <div className="penTask w-30 flex-col rounded-2xl bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
-              <span className=" text-center font-bold">Pending Tasks</span>
-              <span className="text-4xl font-extrabold">
-                {penTasks <= 9 ? "0" + penTasks : penTasks}
-              </span>
-            </div>
-            <div className="totTask flex justify-between w-[80%] bg-white  rounded-2xl pl-5 py-3 shadow-md shadow-neutral-500 items-center">
-              <div className="flex  h-full flex-col">
-                <span className="font-semibold text-[#30a1c4] lg:text-lg text-[15px]">
-                  Tasks created
-                </span>
-                <span className="text-4xl font-bold">
-                  {todos.length <= 9 ? "0" + todos.length : todos.length}
+          <div className="px-4 flex sm:flex-row flex-col h-60 sm:mb-10 mb-0 gap-x-3  justify-between">
+            <div className="flex gap-x-4  sm:justify-normal justify-between items-center">
+              <div className="comTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
+                <span className=" text-center font-bold">Completed Tasks</span>
+                <span className="sm:text-4xl text-3xl font-extrabold">
+                  {comTasks <= 9 ? "0" + comTasks : comTasks}
                 </span>
               </div>
-              <div className="max-w-90 text-center max-h-20 overflow-clip">
+              <div className="penTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
+                <span className=" text-center font-bold">Pending Tasks</span>
+                <span className="sm:text-4xl text-3xl font-extrabold">
+                  {penTasks <= 9 ? "0" + penTasks : penTasks}
+                </span>
+              </div>
+            </div>
+            <div className="totTask flex  fixed left-0 bottom-0 justify-between sm:w-[80%] w-full  bg-white  sm:rounded-2xl rounded-none sm:pl-5 pl-3 md:pr-2 py-3 sm:shadow-md shadow-neutral-500 items-center">
+              <div className="flex  h-full flex-col">
+                <span className="font-semibold text-[#30a1c4] lg:text-lg md:text-[15px] text-[13px] ">
+                  Tasks created
+                </span>
+                <span className="sm:text-4xl text-3xl text-center font-bold">
+                  {todos.length <= 9 ? "0,00" + todos.length : todos.length}
+                </span>
+              </div>
+              <div className="sm:max-w-90 w-70  max-h-20 overflow-clip pr-4 ">
                 <ShinyText
                   text="Your future is created by what you do today, not tomorrow."
                   disabled={false}
                   speed={3}
-                  className="shiny-text-white_Black lg:text-[22px] text-lg font-bold"
+                  className="shiny-text-white_Black lg:text-[22px] text-center sm:text-lg text-[16px] font-bold "
                 />
                 <span className="text-[22px] font-bold text-[#3A3A36]"></span>
               </div>

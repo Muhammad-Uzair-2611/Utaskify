@@ -29,14 +29,14 @@ const Navbar = () => {
       </ul>
       {
         <div
-          className={`about z-20 transition-all duration-200  h-30 w-50 rounded-2xl p-2 bg-[#FFFDD0] shadow-md shadow-black fixed right-5 top-14 ${
+          className={`about z-20 transition-all duration-200  h-25 w-50 rounded-2xl p-2 sm:bg-[#FFFDD0] bg-white shadow-md shadow-black fixed right-5 top-14 ${
             showAbout
               ? "opacity-100 scale-100"
               : "opacity-0 scale-95 pointer-events-none"
           }`}
         >
           <p className="font-bold text-center">
-            This To-Do list App is Made by Muhammad Uzair Shaikh Using React
+            UTaskify is Made by Muhmmad Uzair Shaikh using React
           </p>
         </div>
       }
