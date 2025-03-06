@@ -221,7 +221,9 @@ const Addtask = () => {
           </form>
           <div
             ref={taskRef}
-            className="grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 overflow-hidden h-90 custom-scrollbar"
+            className={`grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 overflow-hidden h-90 custom-scrollbar ${
+              todos.length <= 4 ? "mb-17" : "mb-0"
+            }`}
           >
             {todos.length > 0 ? (
               todos.map((item) => {
@@ -325,25 +327,31 @@ const Addtask = () => {
           <div className="px-4 flex mb-10 gap-x-3">
             <div className="comTask w-30 flex-col rounded-2xl bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
               <span className=" text-center font-bold">Completed Tasks</span>
-              <span className="text-4xl font-extrabold">{comTasks}</span>
+              <span className="text-4xl font-extrabold">
+                {comTasks <= 9 ? "0" + comTasks : comTasks}
+              </span>
             </div>
             <div className="penTask w-30 flex-col rounded-2xl bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
               <span className=" text-center font-bold">Pending Tasks</span>
-              <span className="text-4xl font-extrabold">{penTasks}</span>
+              <span className="text-4xl font-extrabold">
+                {penTasks <= 9 ? "0" + penTasks : penTasks}
+              </span>
             </div>
-            <div className="totTask flex justify-between w-[80%] bg-white  rounded-2xl px-5 py-3 shadow-md shadow-neutral-500 items-center">
+            <div className="totTask flex justify-between w-[80%] bg-white  rounded-2xl pl-5 py-3 shadow-md shadow-neutral-500 items-center">
               <div className="flex  h-full flex-col">
-                <span className="font-semibold text-[#30a1c4] text-lg">
+                <span className="font-semibold text-[#30a1c4] lg:text-lg text-[15px]">
                   Tasks created
                 </span>
-                <span className="text-4xl font-bold">{todos.length}</span>
+                <span className="text-4xl font-bold">
+                  {todos.length <= 9 ? "0" + todos.length : todos.length}
+                </span>
               </div>
-              <div className="max-w-90  max-h-20 overflow-clip">
+              <div className="max-w-90 text-center max-h-20 overflow-clip">
                 <ShinyText
-                  text="Your future is created by what you do today, not tomorrow not tomorrow"
+                  text="Your future is created by what you do today, not tomorrow."
                   disabled={false}
                   speed={3}
-                  className="shiny-text-white_Black text-[22px] font-bold"
+                  className="shiny-text-white_Black lg:text-[22px] text-lg font-bold"
                 />
                 <span className="text-[22px] font-bold text-[#3A3A36]"></span>
               </div>
