@@ -8,9 +8,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-*{
-  /* border: 1px solid red; */
-}
+
 /* Custom CSS */
 
 .playwrite-it-moderna {
@@ -66,5 +64,6 @@
   /* Hover effect */
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #ffe0b1; /* Slightly darker yellow on hover */
+    cursor: grabbing;
   }
 }
