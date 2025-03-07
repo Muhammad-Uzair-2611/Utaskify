@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { FaEdit, FaCheck } from "react-icons/fa";
+import { FaEdit, FaCheck, FaFilter, FaUndoAlt } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { SiTicktick } from "react-icons/si";
@@ -17,13 +17,15 @@ const Addtask = () => {
   const [todos, setTodos] = useState([]);
   const [show, setIsShow] = useState(false);
   const [showFinished, setShowfinished] = useState(true);
-  const [penTasks, setPentasks] = useState(0);
-  const [comTasks, setComtasks] = useState(0);
+  const [penTasks, setPentasks] = useState([]);
+  const [comTasks, setComtasks] = useState([]);
   const [ismobileScreen, setIsmobilescreen] = useState(
     window.innerWidth <= 639
   );
   const [taskpanel, setTaskpanel] = useState(false);
+  const [filter, setFilter] = useState("A");
   const taskRef = useRef(null);
+  const [currentTasks, setCurrenttasks] = useState({});
 
   //*Variables
   let date = new Date();
@@ -58,6 +60,11 @@ const Addtask = () => {
     savetoLS();
     filter_Tasks();
   }, [todos]);
+  useEffect(() => {
+    const current = filtered_tasks();
+    setCurrenttasks(current);
+  });
+
   useEffect(() => {
     if (show) {
       taskRef.current.style.overflowY = "scroll";
@@ -112,9 +119,13 @@ const Addtask = () => {
     setTodos(newtodos);
   };
   const handleDelete = (e, id) => {
-    const confrim = confirm("Are You Sure You Wanna Delete this Task?");
+    const confrim = confirm("Are You Sure You Wanna Delete this Task.?");
     const filterTodos = todos.filter((item) => item.id !== id);
     confrim && setTodos(filterTodos);
+  };
+  const deleteAll = () => {
+    const confrim = confirm("Are You Sure You Wanna Clear all Tasks.?");
+    confrim && setTodos([]);
   };
   const handleEdit = (e, id) => {
     const index = todos.findIndex((item) => item.id === id);
@@ -133,26 +144,30 @@ const Addtask = () => {
     const newtodos = [...todos];
     setTodos(newtodos);
   };
-  const handleBlur = (e) => {
-    const index = todos.findIndex((item) => item.id === e.target.name);
-    todos[index].IsEditable = !todos[index].IsEditable;
-    const newtodos = [...todos];
-    setTodos(newtodos);
-  };
-  const toggleCheckbox = () => {
-    setShowfinished(!showFinished);
-  };
   const showAll = () => {
     setIsShow(!show);
   };
   const filter_Tasks = () => {
     const penTasks = todos.filter((item) => item.Iscompleted != true);
     const comTasks = todos.filter((item) => item.Iscompleted == true);
-    setPentasks(penTasks.length);
-    setComtasks(comTasks.length);
+    setPentasks(penTasks);
+    setComtasks(comTasks);
   };
   const task_panel = () => {
     setTaskpanel(!taskpanel);
+  };
+  const handleFilter = (e) => {
+    setFilter(e.target.value);
+  };
+  const filtered_tasks = () => {
+    switch (filter) {
+      case "A":
+        return todos;
+      case "C":
+        return comTasks;
+      case "P":
+        return penTasks;
+    }
   };
 
   return (
@@ -198,14 +213,14 @@ const Addtask = () => {
                 />
                 {errors.title && (
                   <span className="text-red-500 font-semibold text-sm absolute -bottom-6">
-                    Title is too Long
+                    {errors.title.message}
                   </span>
                 )}
               </div>
               <div className="flex-col relative w-2/3 hidden sm:flex">
                 <input
                   {...register("task", {
-                    maxLength: { value: 78, message: "Task is to Long" },
+                    maxLength: { value: 78, message: "Task is to Long." },
                   })}
                   value={todo}
                   onChange={handleDesc}
@@ -216,7 +231,7 @@ const Addtask = () => {
                 />
                 {errors.task && (
                   <span className="text-red-500  font-semibold text-sm absolute -bottom-6">
-                    Task is too Long
+                    {errors.task.message}
                   </span>
                 )}
               </div>
@@ -234,8 +249,18 @@ const Addtask = () => {
               </button>
             </div>
           </form>
+          <div className="bg-[#F0D1A8] filter my-5 rounded-sm mx-10 cursor-pointer h-8 w-auto items-center justify-center font-semibold p-1 flex gap-x-2">
+            <span title="Filter">
+              <FaFilter />
+            </span>
+            <select className="outline-0" onChange={handleFilter}>
+              <option value="A">All tasks</option>
+              <option value="C">Completed tasks</option>
+              <option value="P">Pending tasks</option>
+            </select>
+          </div>
           <div
-            className={`transition-all ease-in-out ${
+            className={`sm:hidden transition-all ease-in-out ${
               taskpanel ? "opacity-100 scale-100 " : "opacity-0 scale-0 "
             }  z-40  bg-[white] shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0 px-4 py-3 text-black [&_label]:font-bold `}
           >
@@ -248,7 +273,7 @@ const Addtask = () => {
                   <label className="flex flex-col px-1" htmlFor="">
                     Enter Title(optional):
                     <input
-                      {...register("title", {
+                      {...register("phoneTitle", {
                         maxLength: { value: 25, message: "Task is to Long" },
                       })}
                       className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10"
@@ -258,9 +283,9 @@ const Addtask = () => {
                       onChange={handleTitle}
                     />
                   </label>
-                  {errors.title && (
+                  {errors.phoneTitle && (
                     <span className="text-red-500 px-2 font-semibold text-sm ">
-                      Title is too Long
+                      {errors.phoneTitle.message}
                     </span>
                   )}
                 </div>
@@ -269,7 +294,7 @@ const Addtask = () => {
                   <label className="flex flex-col px-1" htmlFor="">
                     Enter Task(Required):
                     <input
-                      {...register("task", {
+                      {...register("phoneTask", {
                         maxLength: { value: 78, message: "Task is to Long" },
                       })}
                       className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10"
@@ -280,9 +305,9 @@ const Addtask = () => {
                     />
                   </label>
 
-                  {errors.task && (
+                  {errors.phoneTask && (
                     <span className="text-red-500 px-2 font-semibold text-sm ">
-                      Task is too Long
+                      {errors.phoneTask.message}
                     </span>
                   )}
                 </div>
@@ -303,86 +328,69 @@ const Addtask = () => {
               todos.length <= 4 ? "mb-17" : "mb-0"
             }`}
           >
-            {todos.length > 0 ? (
-              todos.map((item) => {
+            {currentTasks.length > 0 ? (
+              currentTasks.map((item) => {
                 return (
                   <div
                     key={item.id}
                     className="bg-[#F0D1A8] h-40 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-5 sm:shadow-lg  text-[#2D2D2D] relative "
                   >
-                    {item.Iscompleted ? (
-                      <div className="w-full h-full absolute left-0 flex justify-center items-center flex-col gap-y-1 font-bold md:text-3xl text-2xl text-[#3A3A36]">
-                        Completed
-                        <button
-                          onClick={handleCheckbox}
-                          id={item.id}
-                          className="px-2 md:font-semibold font-medium py-1 text-white cursor-pointer
-                       bg-[#5C9967] rounded-lg md:text-lg text-[15px] hover:bg-[#4A7D54]"
-                        >
-                          Undo
-                        </button>
-                        <span className="md:text-2xl text-lg font-medium">
-                          Complete Date:{item.date}
+                    <>
+                      <div className="h-full w-4/4 flex flex-col justify-between  ">
+                        <div className=" flex flex-col  h-full">
+                          <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
+                            {item.title}
+                          </span>
+
+                          {item.IsEditable ? (
+                            <input
+                              name={item.id}
+                              autoFocus
+                              value={item.task}
+                              onChange={handleEditedTask}
+                              className={`text-[#3A3A36] outline-0 w-full text-wrap `}
+                            />
+                          ) : (
+                            <span
+                              className={`
+                                 text-[#3A3A36] max-w-[95%] break-words whitespace-normal`}
+                            >
+                              {item.task}
+                            </span>
+                          )}
+                        </div>
+                        <div className="">
+                          <span className="text-[22px] font-bold text-[#3A3A36]">
+                            {item.Iscompleted
+                              ? "Completed"
+                              : `Start Data: ${item.date}`}
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        className="buttons flex flex-col h-full p-2 justify-between items-center gap-y-2 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
+                     [&>span]:transition-all
+                   [&>span]:hover:text-[#494940]"
+                      >
+                        <span id={item.id} onClick={handleCheckbox}>
+                          {item.Iscompleted ? <FaUndoAlt /> : <SiTicktick />}
+                        </span>
+                        <span onClick={(e) => handleEdit(e, item.id)}>
+                          {!item.Iscompleted ? (
+                            item.IsEditable ? (
+                              <FaCheck />
+                            ) : (
+                              <FaEdit />
+                            )
+                          ) : (
+                            " "
+                          )}
+                        </span>
+                        <span onClick={(e) => handleDelete(e, item.id)}>
+                          <MdDelete />
                         </span>
                       </div>
-                    ) : (
-                      <>
-                        <div className="h-full w-4/4 flex flex-col justify-between  ">
-                          <div className=" flex flex-col  h-full">
-                            <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
-                              {item.title}
-                            </span>
-
-                            {item.IsEditable ? (
-                              <input
-                                name={item.id}
-                                autoFocus
-                                value={item.task}
-                                // onBlur={handleBlur}
-                                onChange={handleEditedTask}
-                                className={`text-[#3A3A36] outline-0 w-full text-wrap `}
-                              />
-                            ) : (
-                              <span
-                                className={`${
-                                  item.Iscompleted ? "line-through" : ""
-                                } decoration-[#ec9e00] decoration-3 text-[#3A3A36] max-w-[95%] break-words whitespace-normal`}
-                              >
-                                {item.task}
-                              </span>
-                            )}
-                          </div>
-                          <div className="">
-                            <span className="text-[22px] font-bold text-[#3A3A36]">
-                              Start Data: {item.date}
-                            </span>
-                          </div>
-                        </div>
-                        <div
-                          className="buttons flex flex-col h-full p-2 justify-between items-center gap-y-2 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
-                  //   [&>span]:transition-all
-                  // [&>span]:hover:text-[#494940]"
-                        >
-                          <span id={item.id} onClick={handleCheckbox}>
-                            <SiTicktick />
-                          </span>
-                          <span onClick={(e) => handleEdit(e, item.id)}>
-                            {!item.Iscompleted ? (
-                              item.IsEditable ? (
-                                <FaCheck />
-                              ) : (
-                                <FaEdit />
-                              )
-                            ) : (
-                              " "
-                            )}
-                          </span>
-                          <span onClick={(e) => handleDelete(e, item.id)}>
-                            <MdDelete />
-                          </span>
-                        </div>
-                      </>
-                    )}
+                    </>
                   </div>
                 );
               })
@@ -393,27 +401,33 @@ const Addtask = () => {
             )}
           </div>
           {todos.length >= 5 && (
-            <div className="flex justify-center items-center p-2 w-full">
+            <div className="flex justify-center items-center p-2 w-full gap-x-10">
               <button
-                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
+                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all "
                 onClick={showAll}
               >
                 {show ? "Show Less" : "Show All"}
               </button>
+              <button
+                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
+                onClick={deleteAll}
+              >
+                Clear all
+              </button>
             </div>
           )}
-          <div className="px-4 flex sm:flex-row flex-col sm:h-auto h-60 sm:mb-10 mb-0 gap-x-3  justify-between">
+          <div className="px-4 flex sm:flex-row flex-col sm:h-auto h-60 sm:mb-10 mb-0 gap-x-3  justify-between bg-white w-full">
             <div className="flex gap-x-4 sm:justify-normal justify-between items-center">
               <div className="comTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
                 <span className=" text-center font-bold">Completed Tasks</span>
                 <span className="sm:text-4xl text-3xl font-extrabold">
-                  {comTasks <= 9 ? "0" + comTasks : comTasks}
+                  {comTasks <= 9 ? "0" + comTasks.length : comTasks.length}
                 </span>
               </div>
               <div className="penTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
                 <span className=" text-center font-bold">Pending Tasks</span>
                 <span className="sm:text-4xl text-3xl font-extrabold">
-                  {penTasks <= 9 ? "0" + penTasks : penTasks}
+                  {penTasks <= 9 ? "0" + penTasks.length : penTasks.length}
                 </span>
               </div>
             </div>
