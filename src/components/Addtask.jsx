@@ -65,19 +65,6 @@ const Addtask = () => {
     setCurrenttasks(current);
   });
 
-  useEffect(() => {
-    if (show) {
-      taskRef.current.style.overflowY = "scroll";
-      taskRef.current.style.padding = "16px 10px";
-      taskRef.current.style.height = "380px";
-    } else {
-      taskRef.current.style.overflowY = "hidden";
-      taskRef.current.style.padding = "16px";
-      taskRef.current.style.height = "360px";
-      taskRef.current.scrollTop = 0;
-    }
-  }, [show]);
-
   //*Functions
   const savetoLS = () => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -182,7 +169,7 @@ const Addtask = () => {
         >
           <SplitText
             text={`Hello, ${userName},`}
-            className="font-bold text-[30px] mb-2 sm:mb-0 sm:text-4xl"
+            className="font-bold text-[25px] mb-2 sm:mb-0 sm:text-4xl"
           />
           <ShinyText
             text="Start planning today!"
@@ -192,14 +179,14 @@ const Addtask = () => {
           />
         </div>
       )}
-      <div className="h-screen w-full flex justify-center items-start">
+      <div className="h-auto w-full flex justify-center items-start">
         <div
           className={`${
             isVisible ? "" : "blur-xs"
           }  xl:max-w-3/4 w-4/4 sm:w-[96vw] sm:rounded-[5px]  h-auto sm:mt-5 overflow-y-hidden relative  overflow-visible transition-all px-3 sm:px-0`}
         >
           <form onSubmit={handleSubmit(() => handleAdd)}>
-            <div className=" flex sm:justify-center sm:gap-x-2 justify-between items-center p-4 mt-4 sm:mt-0 sm:px-0 ">
+            <div className=" flex sm:justify-center sm:gap-x-2 justify-between items-center p-4 t-4 sm:mt-0 sm:px-0 ">
               <div className="sm:flex flex-col relative hidden">
                 <input
                   {...register("title", {
@@ -239,7 +226,7 @@ const Addtask = () => {
                 text={dayName}
                 disabled={false}
                 speed={3}
-                className="shiny-text-white_Red text-[40px] italic block sm:hidden"
+                className="shiny-text-white_Red text-[35px] font-semibold italic block sm:hidden"
               />
               <button
                 onClick={ismobileScreen ? task_panel : handleAdd}
@@ -249,11 +236,11 @@ const Addtask = () => {
               </button>
             </div>
           </form>
-          <div className="bg-[#F0D1A8] filter my-5 rounded-sm mx-10 cursor-pointer h-8 w-auto items-center justify-center font-semibold p-1 flex gap-x-2">
+          <div className="bg-[#F0D1A8] filter my-5 sm:rounded-sm rounded-lg sm:mx-5 mx-2 cursor-pointer h-8 sm:w-auto items-center justify-center font-semibold sm:p-1 p-4 flex w-43">
             <span title="Filter">
               <FaFilter />
             </span>
-            <select className="outline-0" onChange={handleFilter}>
+            <select className="outline-0 w-38" onChange={handleFilter}>
               <option value="A">All tasks</option>
               <option value="C">Completed tasks</option>
               <option value="P">Pending tasks</option>
@@ -262,13 +249,13 @@ const Addtask = () => {
           <div
             className={`sm:hidden transition-all ease-in-out ${
               taskpanel ? "opacity-100 scale-100 " : "opacity-0 scale-0 "
-            }  z-40  bg-[white] shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0 px-4 py-3 text-black [&_label]:font-bold `}
+            }  z-40  bg-[white] shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0 px-4 py-3 text-black [&_label]:font-bold flex justify-between `}
           >
             <span onClick={task_panel} className="text-3xl">
               <IoCloseSharp />
             </span>
             <form onSubmit={handleSubmit(() => handleAdd)}>
-              <div className="flex flex-col w-full h-90 justify-center border my-1 p-2 rounded-[5px]">
+              <div className="flex flex-col w-full h-90 justify-center my-1 p-2 rounded-[5px]">
                 <div className="">
                   <label className="flex flex-col px-1" htmlFor="">
                     Enter Title(optional):
@@ -324,8 +311,8 @@ const Addtask = () => {
           </div>
           <div
             ref={taskRef}
-            className={`grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 overflow-hidden h-90 custom-scrollbar ${
-              todos.length <= 4 ? "mb-17" : "mb-0"
+            className={`grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 h-auto custom-scrollbar overflow-hidden transition-[max-height] ease-out duration-1000 ${
+              show ? "max-h-[1500px]" : "sm:max-h-[370px] max-h-[540px]"
             }`}
           >
             {currentTasks.length > 0 ? (
@@ -333,7 +320,7 @@ const Addtask = () => {
                 return (
                   <div
                     key={item.id}
-                    className="bg-[#F0D1A8] h-40 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-5 sm:shadow-lg  text-[#2D2D2D] relative "
+                    className="transition-all bg-[#F0D1A8] h-40 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-5 sm:shadow-lg  text-[#2D2D2D] relative "
                   >
                     <>
                       <div className="h-full w-4/4 flex flex-col justify-between  ">
@@ -395,12 +382,12 @@ const Addtask = () => {
                 );
               })
             ) : (
-              <span className="sm:px-5 px-1 sm:text-3xl text-2xl text-[#2D2D2D] sm:font-bold font-semibold">
+              <span className="sm:px-5 px-1 sm:text-3xl text-2xl text-[#2D2D2D] sm:font-bold font-semibold mb-5">
                 No Task to Display...
               </span>
             )}
           </div>
-          {todos.length >= 5 && (
+          {currentTasks.length >= 5 && (
             <div className="flex justify-center items-center p-2 w-full gap-x-10">
               <button
                 className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all "
@@ -440,12 +427,12 @@ const Addtask = () => {
                   {todos.length <= 9 ? "0" + todos.length : todos.length}
                 </span>
               </div>
-              <div className="sm:max-w-90 w-70  max-h-25 overflow-ellipsis pr-4 ">
+              <div className="sm:max-w-90 w-60 max-h-25 overflow-ellipsis">
                 <ShinyText
                   text="Your future is created by what you do today, not tomorrow."
                   disabled={false}
                   speed={3}
-                  className="shiny-text-white_Black lg:text-[22px] sm:text-left text-center sm:text-lg text-[16px] font-bold "
+                  className="shiny-text-white_Black lg:text-[22px] sm:text-lg text-[16px] font-bold "
                 />
                 <span className="text-[22px] font-bold text-[#3A3A36]"></span>
               </div>
