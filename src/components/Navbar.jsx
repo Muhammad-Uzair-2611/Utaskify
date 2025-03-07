@@ -19,7 +19,7 @@ const Navbar = () => {
       } sm:bg-[#FFFDD0] bg-white inter sm:shadow-md  shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between  items-center sm:px-3 px-10 sticky top-0 w-full z-10 `}
     >
       <div className="font-bold text-2xl cursor-pointer">
-        <img src="public/Logo/Logo.svg" alt="UTaskify" />
+        <img src="/Logo.svg" alt="UTaskify" />
       </div>
       <ul
         className="flex gap-x-5 text-[17px] font-bold [&>li]:cursor-pointer 
