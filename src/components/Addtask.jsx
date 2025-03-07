@@ -317,7 +317,7 @@ const Addtask = () => {
           <div
             ref={taskRef}
             className={`grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 h-auto custom-scrollbar overflow-hidden transition-[max-height] ease-out duration-1000 ${
-              show ? "max-h-[1500px]" : "sm:max-h-[370px] max-h-[540px]"
+              show ? "max-h-[1500px]" : "sm:max-h-[370px] max-h-[710px]"
             }`}
           >
             {currentTasks.length > 0 ? (
