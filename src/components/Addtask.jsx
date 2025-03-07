@@ -249,16 +249,18 @@ const Addtask = () => {
           <div
             className={`sm:hidden transition-all ease-in-out ${
               taskpanel ? "opacity-100 scale-100 " : "opacity-0 scale-0 "
-            }  z-40  bg-[white] shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0 px-4 py-3 text-black [&_label]:font-bold flex justify-between `}
+            }  z-40  bg-[white] shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0  py-3 text-black flex flex-col justify-between `}
           >
-            <span onClick={task_panel} className="text-3xl">
+            <span onClick={task_panel} className="text-3xl ml-3">
               <IoCloseSharp />
             </span>
             <form onSubmit={handleSubmit(() => handleAdd)}>
-              <div className="flex flex-col w-full h-90 justify-center my-1 p-2 rounded-[5px]">
+              <div className=" w-full h-90 items-center my-1 p-2 rounded-[5px]">
                 <div className="">
                   <label className="flex flex-col px-1" htmlFor="">
-                    Enter Title(optional):
+                    <span className="font-semibold">
+                      Enter Title(optional):
+                    </span>
                     <input
                       {...register("phoneTitle", {
                         maxLength: { value: 25, message: "Task is to Long" },
@@ -279,7 +281,7 @@ const Addtask = () => {
 
                 <div className="my-8">
                   <label className="flex flex-col px-1" htmlFor="">
-                    Enter Task(Required):
+                    <span className="font-semibold">Enter Task(Required):</span>
                     <input
                       {...register("phoneTask", {
                         maxLength: { value: 78, message: "Task is to Long" },
@@ -301,7 +303,7 @@ const Addtask = () => {
                 <div className="w-full flex justify-center items-center">
                   <button
                     onClick={handleAdd}
-                    className=" bg-[#5C9967] h-12 p-2 text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
+                    className=" bg-[#5C9967] h-10 text-center text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
                   >
                     Add
                   </button>
