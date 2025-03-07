@@ -73,6 +73,9 @@ const Addtask = () => {
   const handleKeyDown = (e) => {
     e.key == "Enter" && handleAdd();
   };
+  const task_panel = () => {
+    setTaskpanel(!taskpanel);
+  };
 
   const handleAdd = () => {
     if (todo != "" && todo.length <= 78 && title.length <= 25) {
@@ -89,8 +92,8 @@ const Addtask = () => {
       ]);
       setTodo("");
       setTitle("");
-      setTaskpanel(false);
-    } else console.log(todo.length);
+      task_panel();
+    } else "";
   };
   const handleDesc = (e) => {
     setTodo(e.target.value);
@@ -139,9 +142,6 @@ const Addtask = () => {
     const comTasks = todos.filter((item) => item.Iscompleted == true);
     setPentasks(penTasks);
     setComtasks(comTasks);
-  };
-  const task_panel = () => {
-    setTaskpanel(!taskpanel);
   };
   const handleFilter = (e) => {
     setFilter(e.target.value);
