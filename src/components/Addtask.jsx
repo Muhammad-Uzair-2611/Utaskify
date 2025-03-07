@@ -392,9 +392,9 @@ const Addtask = () => {
               </span>
             )}
           </div>
-          {ismobileScreen
-            ? currentTasks.length >= 4
-            : currentTasks.length >= 5 && (
+          {currentTasks.length >= ismobileScreen
+            ? 4
+            : 5 && (
                 <div className="flex justify-center items-center p-2 w-full gap-x-10">
                   <button
                     className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all "
