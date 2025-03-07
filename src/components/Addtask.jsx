@@ -49,7 +49,7 @@ const Addtask = () => {
     todos ? setTodos(todos) : [];
 
     const handleScreensize = () => {
-      setIsmobilescreen(window.innerWidth >= 530);
+      setIsmobilescreen(window.innerWidth <= 530);
     };
     window.addEventListener("resize", handleScreensize);
 
