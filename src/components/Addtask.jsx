@@ -16,7 +16,6 @@ const Addtask = () => {
   const [title, setTitle] = useState("");
   const [todos, setTodos] = useState([]);
   const [show, setIsShow] = useState(false);
-  const [showFinished, setShowfinished] = useState(true);
   const [penTasks, setPentasks] = useState([]);
   const [comTasks, setComtasks] = useState([]);
   const [ismobileScreen, setIsmobilescreen] = useState(
@@ -92,7 +91,7 @@ const Addtask = () => {
       ]);
       setTodo("");
       setTitle("");
-      task_panel();
+      setTaskpanel(false);
     } else "";
   };
   const handleDesc = (e) => {
@@ -229,7 +228,14 @@ const Addtask = () => {
                 className="shiny-text-white_Red text-[35px] font-semibold italic block sm:hidden"
               />
               <button
-                onClick={ismobileScreen ? task_panel : handleAdd}
+                onClick={
+                  ismobileScreen
+                    ? () => {
+                        setTaskpanel(true);
+                        console.log("Clicked...");
+                      }
+                    : handleAdd
+                }
                 className="flex justify-center items-center bg-[#5C9967] h-12 p-2 text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
               >
                 <FaPlus />
@@ -251,7 +257,7 @@ const Addtask = () => {
               taskpanel ? "opacity-100 scale-100 " : "opacity-0 scale-0 "
             }  z-40  bg-[white] shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0  py-3 text-black flex flex-col justify-between `}
           >
-            <span onClick={task_panel} className="text-3xl ml-3">
+            <span onClick={() => setTaskpanel(false)} className="text-3xl ml-3">
               <IoCloseSharp />
             </span>
             <form onSubmit={handleSubmit(() => handleAdd)}>
