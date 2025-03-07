@@ -91,7 +91,7 @@ const Addtask = () => {
       ]);
       setTodo("");
       setTitle("");
-      setTaskpanel(false);
+      // setTaskpanel(false);
     } else "";
   };
   const handleDesc = (e) => {
