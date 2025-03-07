@@ -392,24 +392,22 @@ const Addtask = () => {
               </span>
             )}
           </div>
-          {currentTasks.length >= ismobileScreen
-            ? 4
-            : 5 && (
-                <div className="flex justify-center items-center p-2 w-full gap-x-10">
-                  <button
-                    className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all "
-                    onClick={showAll}
-                  >
-                    {show ? "Show Less" : "Show All"}
-                  </button>
-                  <button
-                    className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
-                    onClick={deleteAll}
-                  >
-                    Clear all
-                  </button>
-                </div>
-              )}
+          {currentTasks.length >= 5 && (
+            <div className="flex justify-center items-center p-2 w-full gap-x-10">
+              <button
+                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all "
+                onClick={showAll}
+              >
+                {show ? "Show Less" : "Show All"}
+              </button>
+              <button
+                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
+                onClick={deleteAll}
+              >
+                Clear all
+              </button>
+            </div>
+          )}
           <div className="px-4 flex sm:flex-row flex-col sm:h-auto h-60 sm:mb-10 mb-0 gap-x-3  justify-between bg-white w-full">
             <div className="flex gap-x-4 sm:justify-normal justify-between items-center">
               <div className="comTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
