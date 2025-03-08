@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav
       className={`${
         isVisible ? "" : "blur-xs"
-      } sm:bg-[#FFFDD0] bg-white inter sm:shadow-md  shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between  items-center sm:px-3 px-10 sticky top-0 w-full z-10 `}
+      } sm:bg-[#FFFDD0] bg-white inter sm:shadow-md  shadow-neutral-400  text-[#2D2D2D] h-12 flex justify-between  items-center sm:px-3 px-5 sticky top-0 w-full z-10 `}
     >
       <div className="font-bold text-2xl cursor-pointer">
         <img src="/Logo.svg" alt="UTaskify" />

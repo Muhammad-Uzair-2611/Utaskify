@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const UserInfo = () => {
   const [animate, setAnimate] = useState(false);
@@ -23,7 +23,7 @@ const UserInfo = () => {
         className={`transition-all  ease-in
            ${
              animate ? "opacity-100 scale-100" : "opacity-0 scale-0"
-           } bg-[#FFFDD0] p-6 rounded-2xl shadow-xl w-80 text-center  text-black shadow-neutral-400`}
+           } sm:bg-[#FFFDD0] bg-white p-6 rounded-2xl shadow-xl w-80 text-center  text-black shadow-neutral-400`}
       >
         <h2 className="text-xl font-bold mb-4 text-black">Enter Your Name</h2>
         <input

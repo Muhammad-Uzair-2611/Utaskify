@@ -55,14 +55,25 @@ const Addtask = () => {
 
     return () => window.removeEventListener("resize", handleScreensize);
   }, []);
+
   useEffect(() => {
     savetoLS();
     filter_Tasks();
   }, [todos]);
+
   useEffect(() => {
     const current = filtered_tasks();
     setCurrenttasks(current);
   });
+  useEffect(() => {
+    taskpanel
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [taskpanel]);
 
   //*Functions
   const savetoLS = () => {
@@ -88,7 +99,7 @@ const Addtask = () => {
       ]);
       setTodo("");
       setTitle("");
-      // setTaskpanel(false);
+      setTaskpanel(false);
     } else "";
   };
   const handleDesc = (e) => {
@@ -163,23 +174,25 @@ const Addtask = () => {
           className={`${isVisible ? "" : "blur-xs"}
            heading p-2 px-4 sm:px-2 mt-5 flex flex-col sm:flex-row sm:justify-center sm:items-center items-start font-bold text-4xl text-black`}
         >
-          <SplitText
-            text={`Hello, ${userName},`}
-            className="font-bold text-[25px] mb-2 sm:mb-0 sm:text-4xl"
-          />
-          <ShinyText
-            text="Start planning today!"
-            disabled={false}
-            speed={3}
-            className="shiny-text-white_Black text-[25px] sm:text-4xl"
-          />
+          <span className=" w-full text-center">
+            <SplitText
+              text={`Hello, ${userName},`}
+              className="font-bold text-[24px] mb-2 sm:b-0 sm:text-3xl lg:text-4xl"
+            />
+            <ShinyText
+              text="Start planning today!"
+              disabled={false}
+              speed={3}
+              className="shiny-text-white_Black text-[24px] sm:text-3xl lg:text-4xl"
+            />
+          </span>
         </div>
       )}
       <div className="h-auto w-full flex justify-center items-start">
         <div
           className={`${
             isVisible ? "" : "blur-xs"
-          }  xl:max-w-3/4 w-4/4 sm:w-[96vw] sm:rounded-[5px]  h-auto sm:mt-5 overflow-y-hidden relative  overflow-visible transition-all px-3 sm:px-0`}
+          }  xl:max-w-3/4 w-4/4 sm:w-[96vw] sm:rounded-[5px]  h-auto sm:mt-5 overflow-y-hidden relative  overflow-visible transition-all sm:px-0`}
         >
           <form onSubmit={handleSubmit(() => handleAdd)}>
             <div className=" flex sm:justify-center sm:gap-x-2 justify-between items-center p-4 t-4 sm:mt-0 sm:px-0 ">
@@ -222,7 +235,7 @@ const Addtask = () => {
                 text={dayName}
                 disabled={false}
                 speed={3}
-                className="shiny-text-white_Red text-[35px] font-semibold italic block sm:hidden"
+                className="shiny-text-white_Red text-[28px] font-semibold italic block sm:hidden"
               />
               <button
                 onClick={
@@ -233,13 +246,13 @@ const Addtask = () => {
                       }
                     : handleAdd
                 }
-                className="flex justify-center items-center bg-[#5C9967] h-12 p-2 text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
+                className="flex justify-center items-center bg-[#5C9967] sm:h-12 h-10 text-center text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
               >
                 <FaPlus />
               </button>
             </div>
           </form>
-          <div className="bg-[#F0D1A8] filter my-5 sm:rounded-sm rounded-lg sm:mx-5 mx-2 cursor-pointer h-8 sm:w-auto items-center justify-center font-semibold sm:p-1 p-4 flex w-43">
+          <div className="bg-[#F0D1A8] filter my-5 sm:rounded-sm rounded-lg sm:mx-5 mx-4 cursor-pointer h-8 sm:w-auto items-center justify-center font-semibold sm:p-1 p-4 flex w-43">
             <span title="Filter">
               <FaFilter />
             </span>
@@ -258,7 +271,7 @@ const Addtask = () => {
               <IoCloseSharp />
             </span>
             <form onSubmit={handleSubmit(() => handleAdd)}>
-              <div className=" w-full h-90 items-center my-1 p-2 rounded-[5px]">
+              <div className="py-10 w-full h-90 items-center my-1 p-2 rounded-[5px]">
                 <div className="">
                   <label className="flex flex-col px-1" htmlFor="">
                     <span className="font-semibold">
@@ -313,6 +326,10 @@ const Addtask = () => {
                 </div>
               </div>
             </form>
+            <div className="w-full text-center ">
+              UTaskify | All Rigths Reserved By{" "}
+              <b className="opacity-70">Muhammad Uzair</b>
+            </div>
           </div>
           <div
             ref={taskRef}
@@ -325,11 +342,11 @@ const Addtask = () => {
                 return (
                   <div
                     key={item.id}
-                    className="transition-all bg-[#F0D1A8] h-40 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-5 sm:shadow-lg  text-[#2D2D2D] relative "
+                    className="transition-all bg-[#F0D1A8] sm:h-40 h-35 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-3 sm:shadow-lg  text-[#2D2D2D] relative "
                   >
                     <>
                       <div className="h-full w-4/4 flex flex-col justify-between  ">
-                        <div className=" flex flex-col  h-full">
+                        <div className=" flex flex-col gap-y-2  h-full">
                           <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
                             {item.title}
                           </span>
@@ -352,7 +369,7 @@ const Addtask = () => {
                           )}
                         </div>
                         <div className="">
-                          <span className="text-[22px] font-bold text-[#3A3A36]">
+                          <span className="text-xl font-semibold text-[#3A3A36]">
                             {item.Iscompleted
                               ? "Completed"
                               : `Start Data: ${item.date}`}
@@ -360,9 +377,9 @@ const Addtask = () => {
                         </div>
                       </div>
                       <div
-                        className="buttons flex flex-col h-full p-2 justify-between items-center gap-y-2 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
+                        className="buttons flex flex-col h-full justify-between items-center gap-y-2 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
                      [&>span]:transition-all
-                   [&>span]:hover:text-[#494940]"
+                   [&>span]:hover:text-[#494940] p-2"
                       >
                         <span id={item.id} onClick={handleCheckbox}>
                           {item.Iscompleted ? <FaUndoAlt /> : <SiTicktick />}
@@ -387,9 +404,11 @@ const Addtask = () => {
                 );
               })
             ) : (
-              <span className="sm:px-5 px-1 sm:text-3xl text-2xl text-[#2D2D2D] sm:font-bold font-semibold mb-5">
-                No Task to Display...
-              </span>
+              <div className="bg-[#F0D1A8] sm:h-40 h-35 sm:rounded-[5px] rounded-xl w-full flex justify-center items-center p-2 sm:shadow-lg  text-[#2D2D2D]">
+                <span className="sm:px-5 px-1 sm:text-3xl text-2xl sm:font-bold font-semibold mb-5">
+                  No Task to Display...
+                </span>
+              </div>
             )}
           </div>
           {currentTasks.length >= 5 && (
@@ -413,23 +432,23 @@ const Addtask = () => {
               <div className="comTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
                 <span className=" text-center font-bold">Completed Tasks</span>
                 <span className="sm:text-4xl text-3xl font-extrabold">
-                  {comTasks <= 9 ? "0" + comTasks.length : comTasks.length}
+                  {comTasks.length}
                 </span>
               </div>
               <div className="penTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
                 <span className=" text-center font-bold">Pending Tasks</span>
                 <span className="sm:text-4xl text-3xl font-extrabold">
-                  {penTasks <= 9 ? "0" + penTasks.length : penTasks.length}
+                  {penTasks.length}
                 </span>
               </div>
             </div>
-            <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 pl-3 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-auto py-2 sm:py-0">
-              <div className="flex h-full sm:h-fit flex-col order">
+            <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-auto py-2 sm:py-0">
+              <div className="flex h-full sm:h-fit w-30 items-center justify-center flex-col px-2">
                 <span className="font-semibold text-[#30a1c4] lg:text-lg md:text-[15px] text-[13px] ">
                   Tasks created
                 </span>
                 <span className="sm:text-4xl text-3xl text-center font-bold">
-                  {todos.length <= 9 ? "0" + todos.length : todos.length}
+                  {todos.length}
                 </span>
               </div>
               <div className="sm:max-w-90 w-60 max-h-25 overflow-ellipsis">
@@ -437,7 +456,7 @@ const Addtask = () => {
                   text="Your future is created by what you do today, not tomorrow."
                   disabled={false}
                   speed={3}
-                  className="shiny-text-white_Black lg:text-[22px] sm:text-lg text-[16px] font-bold "
+                  className="shiny-text-white_Black lg:text-[22px] sm:text-lg text-[16px] text-center font-bold "
                 />
                 <span className="text-[22px] font-bold text-[#3A3A36]"></span>
               </div>
