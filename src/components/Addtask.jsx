@@ -369,7 +369,7 @@ const Addtask = () => {
                           )}
                         </div>
                         <div className="">
-                          <span className="text-xl font-semibold text-[#3A3A36]">
+                          <span className="text-lg font-semibold text-[#3A3A36]">
                             {item.Iscompleted
                               ? "Completed"
                               : `Start Data: ${item.date}`}
