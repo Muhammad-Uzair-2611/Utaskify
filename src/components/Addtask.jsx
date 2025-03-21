@@ -456,7 +456,7 @@ const Addtask = () => {
                   text="Your future is created by what you do today, not tomorrow."
                   disabled={false}
                   speed={3}
-                  className="shiny-text-white_Black lg:text-[22px] sm:text-lg text-[16px] text-center font-bold "
+                  className="shiny-text-white_Black lg:text-[22px] sm:text-lg text-[16px] font-bold "
                 />
                 <span className="text-[22px] font-bold text-[#3A3A36]"></span>
               </div>
