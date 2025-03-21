@@ -26,7 +26,7 @@ const Addtask = () => {
   const taskRef = useRef(null);
   const [currentTasks, setCurrenttasks] = useState({});
 
-  //*Variables
+  //*Date Variables
   let date = new Date();
   let month = date.getMonth() + 1;
   let day = date.getDate();
@@ -443,11 +443,11 @@ const Addtask = () => {
               </div>
             </div>
             <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-auto py-2 sm:py-0">
-              <div className="flex h-full sm:h-fit w-30 items-center justify-center flex-col px-2">
-                <span className="font-semibold text-[#30a1c4] lg:text-lg md:text-[15px] text-[13px] ">
+              <div className="flex  h-full sm:h-fit w-auto items-start justify-center flex-col ">
+                <span className="w-40   font-semibold text-[#30a1c4] lg:text-lg md:text-[15px] text-[13px] ">
                   Tasks created
                 </span>
-                <span className="sm:text-4xl text-3xl text-center font-bold">
+                <span className="sm:text-4xl  text-3xl text-center font-bold">
                   {todos.length}
                 </span>
               </div>
