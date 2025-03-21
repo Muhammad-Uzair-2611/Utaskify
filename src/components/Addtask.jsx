@@ -124,7 +124,7 @@ const Addtask = () => {
     setSearchQuery(query);
     let matchedTodos = [];
     todos.forEach((todo, index) => {
-      if (todo.title.startsWith(query)) {
+      if (todo.title.toLowerCase().startsWith(query.toLowerCase())) {
         matchedTodos[index] = todo;
         setSearchedTodos(matchedTodos);
       } else {
