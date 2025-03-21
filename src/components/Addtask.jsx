@@ -120,18 +120,17 @@ const Addtask = () => {
   };
   const Search_By_Title = (e) => {
     let query = e.target.value;
-    if (query !== "") {
-      setSearchQuery(query);
-      let matchedTodos = [];
-      todos.forEach((todo, index) => {
-        if (todo.title.startsWith(query)) {
-          matchedTodos[index] = todo;
-          setSearchedTodos(matchedTodos);
-        } else {
-          setSearchedTodos(matchedTodos);
-        }
-      });
-    }
+
+    setSearchQuery(query);
+    let matchedTodos = [];
+    todos.forEach((todo, index) => {
+      if (todo.title.startsWith(query)) {
+        matchedTodos[index] = todo;
+        setSearchedTodos(matchedTodos);
+      } else {
+        setSearchedTodos(matchedTodos);
+      }
+    });
   };
   const handleDelete = (e, id) => {
     const confrim = confirm("Are You Sure You Wanna Delete this Task.?");
