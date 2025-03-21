@@ -9,6 +9,7 @@ import ShinyText from "./ShinyText";
 import UserInfo from "./UserInfo";
 import { useForm } from "react-hook-form";
 import { IoCloseSharp } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
 
 const Addtask = () => {
   //*States & Refs
@@ -18,6 +19,8 @@ const Addtask = () => {
   const [show, setIsShow] = useState(false);
   const [penTasks, setPentasks] = useState([]);
   const [comTasks, setComtasks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchedTodos, setSearchedTodos] = useState([]);
   const [ismobileScreen, setIsmobilescreen] = useState(
     window.innerWidth <= 639
   );
@@ -62,7 +65,7 @@ const Addtask = () => {
   }, [todos]);
 
   useEffect(() => {
-    const current = filtered_tasks();
+    const current = searchQuery === "" ? filtered_tasks() : searchedTodos;
     setCurrenttasks(current);
   });
   useEffect(() => {
@@ -115,10 +118,26 @@ const Addtask = () => {
     const newtodos = [...todos];
     setTodos(newtodos);
   };
+  const Search_By_Title = (e) => {
+    let query = e.target.value;
+    if (query !== "") {
+      setSearchQuery(query);
+      let matchedTodos = [];
+      todos.forEach((todo, index) => {
+        if (todo.title.startsWith(query)) {
+          matchedTodos[index] = todo;
+          setSearchedTodos(matchedTodos);
+        } else {
+          setSearchedTodos(matchedTodos);
+        }
+      });
+    }
+  };
   const handleDelete = (e, id) => {
     const confrim = confirm("Are You Sure You Wanna Delete this Task.?");
     const filterTodos = todos.filter((item) => item.id !== id);
     confrim && setTodos(filterTodos);
+    setSearchQuery("");
   };
   const deleteAll = () => {
     const confrim = confirm("Are You Sure You Wanna Clear all Tasks.?");
@@ -202,6 +221,7 @@ const Addtask = () => {
                     maxLength: { value: 25, message: "Title is too long" },
                   })}
                   value={title}
+                  onFocus={() => setSearchQuery("")}
                   onChange={handleTitle}
                   type="text"
                   className="bg-[#DBE2EF] h-12 p-2 outline-0 rounded-[5px] "
@@ -219,6 +239,7 @@ const Addtask = () => {
                     maxLength: { value: 78, message: "Task is to Long." },
                   })}
                   value={todo}
+                  onFocus={() => setSearchQuery("")}
                   onChange={handleDesc}
                   onKeyDown={handleKeyDown}
                   type="text"
@@ -252,15 +273,35 @@ const Addtask = () => {
               </button>
             </div>
           </form>
-          <div className="bg-[#F0D1A8] filter my-5 sm:rounded-sm rounded-lg sm:mx-5 mx-4 cursor-pointer h-8 sm:w-auto items-center justify-center font-semibold sm:p-1 p-4 flex w-43">
-            <span title="Filter">
-              <FaFilter />
+          <div className="flex justify-between px-2 sm:mx-5 mx-4 my-5 sm:p-1">
+            <div className="bg-[#F0D1A8] filter sm:rounded-sm rounded-lg  cursor-pointer h-8 sm:w-auto items-center justify-center font-semibold flex p-1 sm:p-3 ">
+              <span title="Filter">
+                <FaFilter />
+              </span>
+              <select
+                className="cursor-pointer outline-0 w-38"
+                onChange={handleFilter}
+              >
+                <option value="A">All tasks</option>
+                <option value="C">Completed tasks</option>
+                <option value="P">Pending tasks</option>
+              </select>
+            </div>
+            <span className="font-semibold text-lg">
+              All Rights Reseverd by Uzair Shaikh
             </span>
-            <select className="cursor-pointer outline-0 w-38" onChange={handleFilter}>
-              <option value="A">All tasks</option>
-              <option value="C">Completed tasks</option>
-              <option value="P">Pending tasks</option>
-            </select>
+            <div className="SearchBar rounded-sm w-52 px-2 bg-[#F0D1A8] flex justify-between items-center">
+              <input
+                className="outline-0 text-sm placeholder:text-[13px] w-[80%] placeholder:text-neutral-700 placeholder:font-semibold"
+                type="text"
+                value={searchQuery}
+                onChange={Search_By_Title}
+                placeholder="Search By Title"
+              />
+              <span>
+                <CiSearch />
+              </span>
+            </div>
           </div>
           <div
             className={`sm:hidden transition-all ease-in-out ${

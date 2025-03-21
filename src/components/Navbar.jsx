@@ -21,6 +21,7 @@ const Navbar = () => {
       <div className="font-bold text-2xl cursor-pointer">
         <img src="/Logo.svg" alt="UTaskify" />
       </div>
+      
       <ul
         className="flex gap-x-5 text-[17px] font-bold [&>li]:cursor-pointer 
         [&>li]:transition-all [&>li]:duration-200 transform [&>li]:hover:scale-105 [&>li]:select-none "
