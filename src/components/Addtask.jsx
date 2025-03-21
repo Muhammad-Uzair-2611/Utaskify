@@ -256,7 +256,7 @@ const Addtask = () => {
             <span title="Filter">
               <FaFilter />
             </span>
-            <select className="outline-0 w-38" onChange={handleFilter}>
+            <select className="cursor-pointer outline-0 w-38" onChange={handleFilter}>
               <option value="A">All tasks</option>
               <option value="C">Completed tasks</option>
               <option value="P">Pending tasks</option>
