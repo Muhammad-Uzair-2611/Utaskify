@@ -272,8 +272,8 @@ const Addtask = () => {
               </button>
             </div>
           </form>
-          <div className="flex justify-between px-2 sm:mx-5 mx-4 my-5 sm:p-1">
-            <div className="bg-[#F0D1A8] filter sm:rounded-sm rounded-lg  cursor-pointer h-8 sm:w-auto items-center justify-center font-semibold flex p-1 sm:p-3 ">
+          <div className="flex justify-between px-2 sm:mx-5 mx-4 my-5 sm:p-1 flex-col-reverse sm:flex-row gap-y-3">
+            <div className="bg-[#F0D1A8] filter sm:rounded-sm rounded-lg cursor-pointer h-8 sm:w-auto w-full items-center justify-center font-semibold flex sm:p-3 ">
               <span title="Filter">
                 <FaFilter />
               </span>
@@ -286,10 +286,7 @@ const Addtask = () => {
                 <option value="P">Pending tasks</option>
               </select>
             </div>
-            <span className="font-semibold text-lg">
-              All Rights Reseverd by Uzair Shaikh
-            </span>
-            <div className="SearchBar rounded-sm w-52 px-2 bg-[#F0D1A8] flex justify-between items-center">
+            <div className="SearchBar rounded-sm sm:w-52 w-full px-2 bg-[#F0D1A8] flex justify-between items-center h-8 ">
               <input
                 className="outline-0 text-sm placeholder:text-[13px] w-[80%] placeholder:text-neutral-700 placeholder:font-semibold"
                 type="text"
@@ -482,12 +479,12 @@ const Addtask = () => {
                 </span>
               </div>
             </div>
-            <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-auto py-2 sm:py-0">
-              <div className="flex  h-full sm:h-fit w-auto items-start justify-center flex-col ">
-                <span className="w-40   font-semibold text-[#30a1c4] lg:text-lg md:text-[15px] text-[13px] ">
+            <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-auto py-2 sm:py-0 px-4 sm:px-0">
+              <div className="flex h-full sm:h-fit w-auto items-start justify-center flex-col ">
+                <span className="w-40 font-semibold text-[#30a1c4] lg:text-lg md:text-[15px] text-[13px] ">
                   Tasks created
                 </span>
-                <span className="sm:text-4xl  text-3xl text-center font-bold">
+                <span className="sm:text-4xl text-3xl text-center font-bold">
                   {todos.length}
                 </span>
               </div>
