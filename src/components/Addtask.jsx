@@ -273,7 +273,7 @@ const Addtask = () => {
             </div>
           </form>
           <div className="flex justify-between px-2 sm:mx-5 mx-4 my-5 sm:p-1 flex-col-reverse sm:flex-row gap-y-3">
-            <div className="bg-[#F0D1A8] filter sm:rounded-sm rounded-lg cursor-pointer h-8 sm:w-auto w-full items-center justify-center font-semibold flex sm:p-3 ">
+            <div className="bg-[#F0D1A8] filter rounded-sm cursor-pointer h-8 sm:w-auto w-full items-center justify-center font-semibold flex sm:p-3 ">
               <span title="Filter">
                 <FaFilter />
               </span>
