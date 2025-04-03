@@ -379,7 +379,7 @@ const Addtask = () => {
                 return (
                   <div
                     key={item.id}
-                    className="transition-all bg-[#F0D1A8] sm:h-40 h-35 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-3 sm:shadow-lg  text-[#2D2D2D] relative "
+                    className="transition-all bg-[#F0D1A8] sm:min-h-40 h-fit  min-h-35 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-3 sm:shadow-lg  text-[#2D2D2D] relative "
                   >
                     <>
                       <div className="h-full w-4/4 flex flex-col justify-between  ">
