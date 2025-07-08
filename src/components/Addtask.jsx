@@ -372,7 +372,7 @@ const Addtask = () => {
                     className="transition-all bg-[#F0D1A8] sm:min-h-40 h-fit  min-h-35 sm:rounded-[5px] rounded-xl w-full flex justify-between items-start py-2 sm:px-3 pr-2 pl-3 sm:shadow-lg  text-[#2D2D2D] relative "
                   >
                     <>
-                      <div className="h-full w-[90%] flex flex-col border justify-between  ">
+                      <div className="h-full w-[90%] flex flex-col justify-between  ">
                         <div className=" flex flex-col gap-y-2 h-full">
                           <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
                             {item.title}
