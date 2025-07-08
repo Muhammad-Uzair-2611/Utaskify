@@ -88,7 +88,7 @@ const Addtask = () => {
   };
 
   const handleAdd = () => {
-    if (todo != "" && todo.length <= 78 && title.length <= 25) {
+    if (todo != "" && title.length <= 25) {
       setTodos([
         {
           id: uuidv4(),
@@ -234,9 +234,6 @@ const Addtask = () => {
               </div>
               <div className="flex-col relative w-2/3 hidden sm:flex">
                 <input
-                  {...register("task", {
-                    maxLength: { value: 78, message: "Task is to Long." },
-                  })}
                   value={todo}
                   onFocus={() => setSearchQuery("")}
                   onChange={handleDesc}
@@ -245,11 +242,6 @@ const Addtask = () => {
                   className="bg-[#DBE2EF] p-2 h-12 outline-0  rounded-[5px]  "
                   placeholder="Detail of the Task"
                 />
-                {errors.task && (
-                  <span className="text-red-500  font-semibold text-sm absolute -bottom-6">
-                    {errors.task.message}
-                  </span>
-                )}
               </div>
               <ShinyText
                 text={dayName}
@@ -370,20 +362,18 @@ const Addtask = () => {
           </div>
           <div
             ref={taskRef}
-            className={`grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 h-auto custom-scrollbar overflow-hidden transition-[max-height] ease-out duration-1000 ${
-              show ? "max-h-[1500px]" : "sm:max-h-[370px] max-h-[710px]"
-            }`}
+            className={`grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 h-auto custom-scrollbar  transition-[max-height] ease-out duration-1000 `}
           >
             {currentTasks.length > 0 ? (
               currentTasks.map((item) => {
                 return (
                   <div
                     key={item.id}
-                    className="transition-all bg-[#F0D1A8] sm:min-h-40 h-fit  min-h-35 sm:rounded-[5px] rounded-xl w-full flex justify-between items-center py-2 sm:px-3 pr-2 pl-3 sm:shadow-lg  text-[#2D2D2D] relative "
+                    className="transition-all bg-[#F0D1A8] sm:min-h-40 h-fit  min-h-35 sm:rounded-[5px] rounded-xl w-full flex justify-between items-start py-2 sm:px-3 pr-2 pl-3 sm:shadow-lg  text-[#2D2D2D] relative "
                   >
                     <>
-                      <div className="h-full w-4/4 flex flex-col justify-between  ">
-                        <div className=" flex flex-col gap-y-2  h-full">
+                      <div className="h-full w-[90%] flex flex-col border justify-between  ">
+                        <div className=" flex flex-col gap-y-2 h-full">
                           <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
                             {item.title}
                           </span>
@@ -399,7 +389,7 @@ const Addtask = () => {
                           ) : (
                             <span
                               className={`
-                                 text-[#3A3A36] max-w-[95%] break-words whitespace-normal`}
+                                 text-[#3A3A36] max-w-[95%]  break-words whitespace-normal`}
                             >
                               {item.task}
                             </span>
@@ -414,7 +404,7 @@ const Addtask = () => {
                         </div>
                       </div>
                       <div
-                        className="buttons flex flex-col h-full justify-between items-center gap-y-2 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
+                        className="buttons flex flex-col h-full justify-between items-center gap-y-4 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
                      [&>span]:transition-all
                    [&>span]:hover:text-[#494940] p-2"
                       >
@@ -451,12 +441,6 @@ const Addtask = () => {
           {currentTasks.length >= 5 && (
             <div className="flex justify-center items-center p-2 w-full gap-x-10">
               <button
-                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all "
-                onClick={showAll}
-              >
-                {show ? "Show Less" : "Show All"}
-              </button>
-              <button
                 className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
                 onClick={deleteAll}
               >
@@ -464,15 +448,15 @@ const Addtask = () => {
               </button>
             </div>
           )}
-          <div className="px-4 flex sm:flex-row flex-col sm:h-auto h-60 sm:mb-10 mb-0 gap-x-3  justify-between bg-white w-full">
+          <div className="px-4 my-5 flex sm:flex-row flex-col sm:h-auto h-60 sm:mb-10 mb-0 gap-x-3  justify-between bg-white w-full">
             <div className="flex gap-x-4 sm:justify-normal justify-between items-center">
-              <div className="comTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#F0D1A8] p-2 flex  justify-between items-center text-[#3A3A36]">
+              <div className="comTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#F0D1A8] sm:shadow-md shadow-neutral-500 p-2 flex  justify-between items-center text-[#3A3A36]">
                 <span className=" text-center font-bold">Completed Tasks</span>
                 <span className="sm:text-4xl text-3xl font-extrabold">
                   {comTasks.length}
                 </span>
               </div>
-              <div className="penTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
+              <div className="penTask sm:w-30 w-40 flex-col rounded-2xl sm:shadow-md shadow-neutral-500 sm:bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
                 <span className=" text-center font-bold">Pending Tasks</span>
                 <span className="sm:text-4xl text-3xl font-extrabold">
                   {penTasks.length}
