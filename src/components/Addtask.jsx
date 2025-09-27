@@ -14,7 +14,6 @@ import { CiSearch } from "react-icons/ci";
 const Addtask = () => {
   //*States & Refs
   const [todo, setTodo] = useState("");
-  const [title, setTitle] = useState("");
   const [todos, setTodos] = useState([]);
   const [show, setIsShow] = useState(false);
   const [penTasks, setPentasks] = useState([]);
@@ -88,11 +87,10 @@ const Addtask = () => {
   };
 
   const handleAdd = () => {
-    if (todo != "" && title.length <= 25) {
+    if (todo != "") {
       setTodos([
         {
           id: uuidv4(),
-          title: title || "No Title",
           task: todo,
           Iscompleted: false,
           IsEditable: false,
@@ -101,15 +99,11 @@ const Addtask = () => {
         ...todos,
       ]);
       setTodo("");
-      setTitle("");
       setTaskpanel(false);
     } else "";
   };
   const handleDesc = (e) => {
     setTodo(e.target.value);
-  };
-  const handleTitle = (e) => {
-    setTitle(e.target.value);
   };
   const handleCheckbox = (e) => {
     const id = e.currentTarget.id;
@@ -118,13 +112,13 @@ const Addtask = () => {
     const newtodos = [...todos];
     setTodos(newtodos);
   };
-  const Search_By_Title = (e) => {
+  const Search_By_Task = (e) => {
     let query = e.target.value;
 
     setSearchQuery(query);
     let matchedTodos = [];
     todos.forEach((todo, index) => {
-      if (todo.title.toLowerCase().startsWith(query.toLowerCase())) {
+      if (todo.task.toLowerCase().includes(query.toLowerCase())) {
         matchedTodos[index] = todo;
         setSearchedTodos(matchedTodos);
       } else {
@@ -214,25 +208,7 @@ const Addtask = () => {
         >
           <form onSubmit={handleSubmit(() => handleAdd)}>
             <div className="flex sm:justify-center sm:gap-x-2 justify-between items-center p-2 sm:p-4 mt-2 sm:mt-0">
-              <div className="sm:flex flex-col relative hidden">
-                <input
-                  {...register("title", {
-                    maxLength: { value: 25, message: "Title is too long" },
-                  })}
-                  value={title}
-                  onFocus={() => setSearchQuery("")}
-                  onChange={handleTitle}
-                  type="text"
-                  className="bg-[#DBE2EF] h-10 sm:h-12 p-2 outline-0 rounded-[5px] text-sm sm:text-base"
-                  placeholder="Title (optional)"
-                />
-                {errors.title && (
-                  <span className="text-red-500 font-semibold text-xs sm:text-sm absolute -bottom-5 sm:-bottom-6">
-                    {errors.title.message}
-                  </span>
-                )}
-              </div>
-              <div className="flex-col relative w-2/3 hidden sm:flex">
+              <div className="flex-col relative w-full sm:w-2/3 hidden sm:flex">
                 <input
                   value={todo}
                   onFocus={() => setSearchQuery("")}
@@ -240,7 +216,7 @@ const Addtask = () => {
                   onKeyDown={handleKeyDown}
                   type="text"
                   className="bg-[#DBE2EF] p-2 h-10 sm:h-12 outline-0 rounded-[5px] text-sm sm:text-base"
-                  placeholder="Detail of the Task"
+                  placeholder="Enter your task here..."
                 />
               </div>
               <ShinyText
@@ -283,8 +259,8 @@ const Addtask = () => {
                 className="outline-0 text-xs sm:text-sm placeholder:text-xs sm:placeholder:text-[13px] w-[80%] placeholder:text-neutral-700 placeholder:font-semibold bg-transparent"
                 type="text"
                 value={searchQuery}
-                onChange={Search_By_Title}
-                placeholder="Search By Title"
+                onChange={Search_By_Task}
+                placeholder="Search Tasks"
               />
               <span className="text-sm sm:text-base">
                 <CiSearch />
@@ -304,40 +280,17 @@ const Addtask = () => {
             </span>
             <form onSubmit={handleSubmit(() => handleAdd)}>
               <div className="py-6 sm:py-10 w-full items-center my-1 p-2 sm:p-4 rounded-[5px]">
-                <div className="mb-4 sm:mb-6">
-                  <label className="flex flex-col px-1" htmlFor="">
-                    <span className="font-semibold text-sm sm:text-base mb-1">
-                      Enter Title(optional):
-                    </span>
-                    <input
-                      {...register("phoneTitle", {
-                        maxLength: { value: 25, message: "Task is to Long" },
-                      })}
-                      className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10 sm:h-12 text-sm sm:text-base w-full"
-                      placeholder="Your Title"
-                      type="text"
-                      value={title}
-                      onChange={handleTitle}
-                    />
-                  </label>
-                  {errors.phoneTitle && (
-                    <span className="text-red-500 px-2 font-semibold text-xs sm:text-sm">
-                      {errors.phoneTitle.message}
-                    </span>
-                  )}
-                </div>
-
                 <div className="my-6 sm:my-8">
                   <label className="flex flex-col px-1" htmlFor="">
                     <span className="font-semibold text-sm sm:text-base mb-1">
-                      Enter Task(Required):
+                      Enter Task:
                     </span>
                     <input
                       {...register("phoneTask", {
-                        maxLength: { value: 78, message: "Task is to Long" },
+                        maxLength: { value: 100, message: "Task is too Long" },
                       })}
                       className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10 sm:h-12 text-sm sm:text-base w-full"
-                      placeholder="Your Task"
+                      placeholder="Enter your task here..."
                       type="text"
                       value={todo}
                       onChange={handleDesc}
@@ -379,20 +332,16 @@ const Addtask = () => {
                     <>
                       <div className="h-full w-[85%] sm:w-[90%] flex flex-col justify-between">
                         <div className="flex flex-col gap-y-1 sm:gap-y-2 h-full">
-                          <span className="title text-lg sm:text-xl md:text-2xl font-bold text-[#3A3A36] break-words">
-                            {item.title}
-                          </span>
-
                           {item.IsEditable ? (
                             <input
                               name={item.id}
                               autoFocus
                               value={item.task}
                               onChange={handleEditedTask}
-                              className="text-[#3A3A36] outline-0 w-full text-wrap text-sm sm:text-base bg-transparent"
+                              className="text-[#3A3A36] outline-0 w-full text-wrap text-sm sm:text-base bg-transparent font-medium"
                             />
                           ) : (
-                            <span className="text-[#3A3A36] max-w-[95%] break-words whitespace-normal text-sm sm:text-base">
+                            <span className="text-[#3A3A36] max-w-[95%] break-words whitespace-normal text-sm sm:text-base font-medium">
                               {item.task}
                             </span>
                           )}
@@ -443,16 +392,16 @@ const Addtask = () => {
           {currentTasks.length >= 5 && (
             <div className="flex justify-center items-center p-2 w-full gap-x-10">
               <button
-                className=" text-[#3A3A36] text-lg px-2 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
+                className=" text-[#3A3A36] bg-red-200 hover:bg-red-300 rounded-lg text-lg px-6 py-3 font-bold cursor-pointer transform hover:scale-102  transition-all"
                 onClick={deleteAll}
               >
                 Clear all
               </button>
             </div>
           )}
-          <div className="px-2 sm:px-4 my-3 sm:my-5 flex flex-col sm:flex-row sm:h-auto gap-3 sm:gap-x-3 justify-between bg-white w-full">
-            <div className="flex gap-x-3 sm:gap-x-4 justify-between sm:justify-normal items-center">
-              <div className="comTask w-32 sm:w-30 flex-col rounded-2xl bg-[#F0D1A8] shadow-md shadow-neutral-500 p-2 flex justify-between items-center text-[#3A3A36]">
+          <div className="px-2  sm:px-4 my-3 sm:my-4 flex flex-col sm:flex-row sm:h-auto gap-3 sm:gap-x-3 justify-between bg-white w-full">
+            <div className="flex gap-x-3  sm:gap-x-4 justify-between sm:justify-normal items-center sm:mb-0 mb-[80px]">
+              <div className="comTask h-full w-32 sm:w-30 flex-col rounded-2xl bg-green-100 shadow-md shadow-neutral-500 p-2 flex justify-center items-center text-[#3A3A36]">
                 <span className="text-center font-bold text-xs sm:text-sm">
                   Completed Tasks
                 </span>
@@ -460,7 +409,7 @@ const Addtask = () => {
                   {comTasks.length}
                 </span>
               </div>
-              <div className="comTask w-32 sm:w-30 flex-col rounded-2xl bg-[#F0D1A8] shadow-md shadow-neutral-500 p-2 flex justify-between items-center text-[#3A3A36]">
+              <div className="comTask h-full w-32 sm:w-30 flex-col rounded-2xl bg-red-100 shadow-md shadow-neutral-500 p-2 flex justify-center items-center text-[#3A3A36]">
                 <span className="text-center font-bold text-xs sm:text-sm tracking-wide">
                   Pending Tasks
                 </span>
@@ -469,8 +418,8 @@ const Addtask = () => {
                 </span>
               </div>
             </div>
-            <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-auto py-2 sm:py-0 px-4 sm:px-0">
-              <div className="flex h-full sm:h-fit w-auto items-start justify-center flex-col">
+            <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-20 py-2 sm:py-0 px-4 sm:px-0">
+              <div className="flex  h-full sm:h-fit w-auto items-start justify-center flex-col">
                 <span className="w-32 sm:w-40 font-semibold text-[#30a1c4] text-xs sm:text-sm md:text-base">
                   Tasks created
                 </span>
