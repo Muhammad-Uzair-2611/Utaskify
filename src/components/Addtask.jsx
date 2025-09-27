@@ -190,18 +190,18 @@ const Addtask = () => {
       ) : (
         <div
           className={`${isVisible ? "" : "blur-xs"}
-           heading p-2 px-4 sm:px-2 mt-5 flex flex-col sm:flex-row sm:justify-center sm:items-center items-start font-bold text-4xl text-black`}
+           heading p-2 px-4 sm:px-2 mt-3 sm:mt-5 flex flex-col sm:flex-row sm:justify-center sm:items-center items-start font-bold text-black`}
         >
-          <span className=" w-full text-center">
+          <span className="w-full text-center">
             <SplitText
               text={`Hello, ${userName},`}
-              className="font-bold text-[24px] mb-2 sm:b-0 sm:text-3xl lg:text-4xl"
+              className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-1 sm:mb-0"
             />
             <ShinyText
               text="Start planning today!"
               disabled={false}
               speed={3}
-              className="shiny-text-white_Black text-[24px] sm:text-3xl lg:text-4xl"
+              className="shiny-text-white_Black text-xl sm:text-2xl md:text-3xl lg:text-4xl"
             />
           </span>
         </div>
@@ -210,10 +210,10 @@ const Addtask = () => {
         <div
           className={`${
             isVisible ? "" : "blur-xs"
-          }  xl:max-w-3/4 w-4/4 sm:w-[96vw] sm:rounded-[5px]  h-auto sm:mt-5 overflow-y-hidden relative  overflow-visible transition-all sm:px-0`}
+          } w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 h-auto sm:mt-5 overflow-y-hidden relative overflow-visible transition-all`}
         >
           <form onSubmit={handleSubmit(() => handleAdd)}>
-            <div className=" flex sm:justify-center sm:gap-x-2 justify-between items-center p-4 t-4 sm:mt-0 sm:px-0 ">
+            <div className="flex sm:justify-center sm:gap-x-2 justify-between items-center p-2 sm:p-4 mt-2 sm:mt-0">
               <div className="sm:flex flex-col relative hidden">
                 <input
                   {...register("title", {
@@ -223,11 +223,11 @@ const Addtask = () => {
                   onFocus={() => setSearchQuery("")}
                   onChange={handleTitle}
                   type="text"
-                  className="bg-[#DBE2EF] h-12 p-2 outline-0 rounded-[5px] "
+                  className="bg-[#DBE2EF] h-10 sm:h-12 p-2 outline-0 rounded-[5px] text-sm sm:text-base"
                   placeholder="Title (optional)"
                 />
                 {errors.title && (
-                  <span className="text-red-500 font-semibold text-sm absolute -bottom-6">
+                  <span className="text-red-500 font-semibold text-xs sm:text-sm absolute -bottom-5 sm:-bottom-6">
                     {errors.title.message}
                   </span>
                 )}
@@ -239,7 +239,7 @@ const Addtask = () => {
                   onChange={handleDesc}
                   onKeyDown={handleKeyDown}
                   type="text"
-                  className="bg-[#DBE2EF] p-2 h-12 outline-0  rounded-[5px]  "
+                  className="bg-[#DBE2EF] p-2 h-10 sm:h-12 outline-0 rounded-[5px] text-sm sm:text-base"
                   placeholder="Detail of the Task"
                 />
               </div>
@@ -247,7 +247,7 @@ const Addtask = () => {
                 text={dayName}
                 disabled={false}
                 speed={3}
-                className="shiny-text-white_Red text-[28px] font-semibold italic block sm:hidden"
+                className="shiny-text-white_Red text-lg sm:text-xl md:text-2xl font-semibold italic block sm:hidden"
               />
               <button
                 onClick={
@@ -258,19 +258,19 @@ const Addtask = () => {
                       }
                     : handleAdd
                 }
-                className="flex justify-center items-center bg-[#5C9967] sm:h-12 h-10 text-center text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
+                className="flex justify-center items-center bg-[#5C9967] h-10 sm:h-12 text-center text-white rounded-[5px] w-12 sm:w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-lg sm:text-xl"
               >
                 <FaPlus />
               </button>
             </div>
           </form>
-          <div className="flex justify-between px-2 sm:mx-5 mx-4 my-5 sm:p-1 flex-col-reverse sm:flex-row gap-y-3">
-            <div className="bg-[#F0D1A8] filter rounded-sm cursor-pointer h-8 sm:w-auto w-full items-center justify-center font-semibold flex sm:p-3 ">
-              <span title="Filter">
+          <div className="flex justify-between px-2 sm:px-4 my-3 sm:my-5 flex-col-reverse sm:flex-row gap-y-3">
+            <div className="bg-[#F0D1A8] filter rounded-sm cursor-pointer h-8 sm:h-10 sm:w-auto w-full items-center justify-center font-semibold flex p-2 sm:p-3">
+              <span title="Filter" className="text-sm sm:text-base">
                 <FaFilter />
               </span>
               <select
-                className="cursor-pointer outline-0 w-38"
+                className="cursor-pointer outline-0 w-32 sm:w-38 text-xs sm:text-sm bg-transparent"
                 onChange={handleFilter}
               >
                 <option value="A">All tasks</option>
@@ -278,15 +278,15 @@ const Addtask = () => {
                 <option value="P">Pending tasks</option>
               </select>
             </div>
-            <div className="SearchBar rounded-sm sm:w-52 w-full px-2 bg-[#F0D1A8] flex justify-between items-center h-8 ">
+            <div className="SearchBar rounded-sm sm:w-52 w-full px-2 bg-[#F0D1A8] flex justify-between items-center h-8 sm:h-10">
               <input
-                className="outline-0 text-sm placeholder:text-[13px] w-[80%] placeholder:text-neutral-700 placeholder:font-semibold"
+                className="outline-0 text-xs sm:text-sm placeholder:text-xs sm:placeholder:text-[13px] w-[80%] placeholder:text-neutral-700 placeholder:font-semibold bg-transparent"
                 type="text"
                 value={searchQuery}
                 onChange={Search_By_Title}
                 placeholder="Search By Title"
               />
-              <span>
+              <span className="text-sm sm:text-base">
                 <CiSearch />
               </span>
             </div>
@@ -294,23 +294,26 @@ const Addtask = () => {
           <div
             className={`sm:hidden transition-all ease-in-out ${
               taskpanel ? "opacity-100 scale-100 " : "opacity-0 scale-0 "
-            }  z-40  bg-[white] shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0  py-3 text-black flex flex-col justify-between `}
+            } z-40 bg-white shadow-[-10px_-10px_90px_rgba(0,0,0,0.5)] h-[85%] w-screen fixed top-[10%] left-0 py-3 text-black flex flex-col justify-between`}
           >
-            <span onClick={() => setTaskpanel(false)} className="text-3xl ml-3">
+            <span
+              onClick={() => setTaskpanel(false)}
+              className="text-2xl sm:text-3xl ml-3 cursor-pointer"
+            >
               <IoCloseSharp />
             </span>
             <form onSubmit={handleSubmit(() => handleAdd)}>
-              <div className="py-10 w-full h-90 items-center my-1 p-2 rounded-[5px]">
-                <div className="">
+              <div className="py-6 sm:py-10 w-full items-center my-1 p-2 sm:p-4 rounded-[5px]">
+                <div className="mb-4 sm:mb-6">
                   <label className="flex flex-col px-1" htmlFor="">
-                    <span className="font-semibold">
+                    <span className="font-semibold text-sm sm:text-base mb-1">
                       Enter Title(optional):
                     </span>
                     <input
                       {...register("phoneTitle", {
                         maxLength: { value: 25, message: "Task is to Long" },
                       })}
-                      className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10"
+                      className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10 sm:h-12 text-sm sm:text-base w-full"
                       placeholder="Your Title"
                       type="text"
                       value={title}
@@ -318,20 +321,22 @@ const Addtask = () => {
                     />
                   </label>
                   {errors.phoneTitle && (
-                    <span className="text-red-500 px-2 font-semibold text-sm ">
+                    <span className="text-red-500 px-2 font-semibold text-xs sm:text-sm">
                       {errors.phoneTitle.message}
                     </span>
                   )}
                 </div>
 
-                <div className="my-8">
+                <div className="my-6 sm:my-8">
                   <label className="flex flex-col px-1" htmlFor="">
-                    <span className="font-semibold">Enter Task(Required):</span>
+                    <span className="font-semibold text-sm sm:text-base mb-1">
+                      Enter Task(Required):
+                    </span>
                     <input
                       {...register("phoneTask", {
                         maxLength: { value: 78, message: "Task is to Long" },
                       })}
-                      className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10"
+                      className="outline-0 p-2 rounded-[5px] bg-[#DBE2EF] h-10 sm:h-12 text-sm sm:text-base w-full"
                       placeholder="Your Task"
                       type="text"
                       value={todo}
@@ -340,7 +345,7 @@ const Addtask = () => {
                   </label>
 
                   {errors.phoneTask && (
-                    <span className="text-red-500 px-2 font-semibold text-sm ">
+                    <span className="text-red-500 px-2 font-semibold text-xs sm:text-sm">
                       {errors.phoneTask.message}
                     </span>
                   )}
@@ -348,7 +353,7 @@ const Addtask = () => {
                 <div className="w-full flex justify-center items-center">
                   <button
                     onClick={handleAdd}
-                    className=" bg-[#5C9967] h-10 text-center text-white rounded-[5px] w-15 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-xl"
+                    className="bg-[#5C9967] h-10 sm:h-12 text-center text-white rounded-[5px] w-20 sm:w-24 cursor-pointer transform hover:scale-103 transition-all hover:bg-[#4A7D54] text-sm sm:text-base font-semibold"
                   >
                     Add
                   </button>
@@ -362,19 +367,19 @@ const Addtask = () => {
           </div>
           <div
             ref={taskRef}
-            className={`grid sm:grid-cols-2 grid-cols-1 gap-3 p-4 h-auto custom-scrollbar  transition-[max-height] ease-out duration-1000 `}
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 p-2 sm:p-4 h-auto custom-scrollbar transition-[max-height] ease-out duration-1000`}
           >
             {currentTasks.length > 0 ? (
               currentTasks.map((item) => {
                 return (
                   <div
                     key={item.id}
-                    className="transition-all bg-[#F0D1A8] sm:min-h-40 h-fit  min-h-35 sm:rounded-[5px] rounded-xl w-full flex justify-between items-start py-2 sm:px-3 pr-2 pl-3 sm:shadow-lg  text-[#2D2D2D] relative "
+                    className="transition-all bg-[#F0D1A8] min-h-32 sm:min-h-40 h-fit rounded-xl sm:rounded-[5px] w-full flex justify-between items-start py-2 sm:py-3 px-2 sm:px-3 sm:shadow-lg text-[#2D2D2D] relative"
                   >
                     <>
-                      <div className="h-full w-[90%] flex flex-col justify-between  ">
-                        <div className=" flex flex-col gap-y-2 h-full">
-                          <span className="title md:text-3xl text-2xl font-bold text-[#3A3A36]">
+                      <div className="h-full w-[85%] sm:w-[90%] flex flex-col justify-between">
+                        <div className="flex flex-col gap-y-1 sm:gap-y-2 h-full">
+                          <span className="title text-lg sm:text-xl md:text-2xl font-bold text-[#3A3A36] break-words">
                             {item.title}
                           </span>
 
@@ -384,19 +389,16 @@ const Addtask = () => {
                               autoFocus
                               value={item.task}
                               onChange={handleEditedTask}
-                              className={`text-[#3A3A36] outline-0 w-full text-wrap `}
+                              className="text-[#3A3A36] outline-0 w-full text-wrap text-sm sm:text-base bg-transparent"
                             />
                           ) : (
-                            <span
-                              className={`
-                                 text-[#3A3A36] max-w-[95%]  break-words whitespace-normal`}
-                            >
+                            <span className="text-[#3A3A36] max-w-[95%] break-words whitespace-normal text-sm sm:text-base">
                               {item.task}
                             </span>
                           )}
                         </div>
-                        <div className="">
-                          <span className="text-lg font-semibold text-[#3A3A36]">
+                        <div className="mt-2">
+                          <span className="text-xs sm:text-sm font-semibold text-[#3A3A36]">
                             {item.Iscompleted
                               ? "Completed"
                               : `Start Data: ${item.date}`}
@@ -404,9 +406,9 @@ const Addtask = () => {
                         </div>
                       </div>
                       <div
-                        className="buttons flex flex-col h-full justify-between items-center gap-y-4 text-2xl text-[#3A3A36] [&>span]:cursor-pointer gap-x-2
+                        className="buttons flex flex-col h-full justify-between items-center gap-y-2 sm:gap-y-4 text-lg sm:text-2xl text-[#3A3A36] [&>span]:cursor-pointer
                      [&>span]:transition-all
-                   [&>span]:hover:text-[#494940] p-2"
+                   [&>span]:hover:text-[#494940] p-1 sm:p-2"
                       >
                         <span id={item.id} onClick={handleCheckbox}>
                           {item.Iscompleted ? <FaUndoAlt /> : <SiTicktick />}
@@ -431,8 +433,8 @@ const Addtask = () => {
                 );
               })
             ) : (
-              <div className="bg-[#F0D1A8] sm:h-40 h-35 sm:rounded-[5px] rounded-xl w-full flex justify-center items-center p-2 sm:shadow-lg  text-[#2D2D2D]">
-                <span className="sm:px-5 px-1 sm:text-3xl text-2xl sm:font-bold font-semibold mb-5">
+              <div className="bg-[#F0D1A8] min-h-32 sm:min-h-40 rounded-xl sm:rounded-[5px] w-full flex justify-center items-center p-2 sm:shadow-lg text-[#2D2D2D] col-span-full">
+                <span className="px-2 sm:px-5 text-lg sm:text-2xl md:text-3xl font-semibold text-center">
                   No Task to Display...
                 </span>
               </div>
@@ -448,38 +450,41 @@ const Addtask = () => {
               </button>
             </div>
           )}
-          <div className="px-4 my-5 flex sm:flex-row flex-col sm:h-auto h-60 sm:mb-10 mb-0 gap-x-3  justify-between bg-white w-full">
-            <div className="flex gap-x-4 sm:justify-normal justify-between items-center">
-              <div className="comTask sm:w-30 w-40 flex-col rounded-2xl sm:bg-[#F0D1A8] sm:shadow-md shadow-neutral-500 p-2 flex  justify-between items-center text-[#3A3A36]">
-                <span className=" text-center font-bold">Completed Tasks</span>
-                <span className="sm:text-4xl text-3xl font-extrabold">
+          <div className="px-2 sm:px-4 my-3 sm:my-5 flex flex-col sm:flex-row sm:h-auto gap-3 sm:gap-x-3 justify-between bg-white w-full">
+            <div className="flex gap-x-3 sm:gap-x-4 justify-between sm:justify-normal items-center">
+              <div className="comTask w-32 sm:w-30 flex-col rounded-2xl bg-[#F0D1A8] shadow-md shadow-neutral-500 p-2 flex justify-between items-center text-[#3A3A36]">
+                <span className="text-center font-bold text-xs sm:text-sm">
+                  Completed Tasks
+                </span>
+                <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold">
                   {comTasks.length}
                 </span>
               </div>
-              <div className="penTask sm:w-30 w-40 flex-col rounded-2xl sm:shadow-md shadow-neutral-500 sm:bg-[#C4A49F] p-2 flex  justify-between items-center text-[#291e1a]">
-                <span className=" text-center font-bold">Pending Tasks</span>
-                <span className="sm:text-4xl text-3xl font-extrabold">
+              <div className="comTask w-32 sm:w-30 flex-col rounded-2xl bg-[#F0D1A8] shadow-md shadow-neutral-500 p-2 flex justify-between items-center text-[#3A3A36]">
+                <span className="text-center font-bold text-xs sm:text-sm tracking-wide">
+                  Pending Tasks
+                </span>
+                <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold">
                   {penTasks.length}
                 </span>
               </div>
             </div>
             <div className="totTask flex sm:static fixed left-0 bottom-0 justify-between sm:w-[80%] w-full bg-white sm:rounded-2xl rounded-none sm:pl-5 md:pr-2 sm:shadow-md shadow-neutral-500 items-center sm:h-30 h-auto py-2 sm:py-0 px-4 sm:px-0">
-              <div className="flex h-full sm:h-fit w-auto items-start justify-center flex-col ">
-                <span className="w-40 font-semibold text-[#30a1c4] lg:text-lg md:text-[15px] text-[13px] ">
+              <div className="flex h-full sm:h-fit w-auto items-start justify-center flex-col">
+                <span className="w-32 sm:w-40 font-semibold text-[#30a1c4] text-xs sm:text-sm md:text-base">
                   Tasks created
                 </span>
-                <span className="sm:text-4xl text-3xl text-center font-bold">
+                <span className="text-2xl sm:text-3xl md:text-4xl text-center font-bold">
                   {todos.length}
                 </span>
               </div>
-              <div className="sm:max-w-90 w-60 max-h-25 overflow-ellipsis">
+              <div className="sm:max-w-90 w-48 sm:w-60 max-h-25 overflow-ellipsis">
                 <ShinyText
                   text="Your future is created by what you do today, not tomorrow."
                   disabled={false}
                   speed={3}
-                  className="shiny-text-white_Black lg:text-[22px] sm:text-lg text-[16px] font-bold "
+                  className="shiny-text-white_Black text-sm sm:text-base md:text-lg lg:text-[22px] font-bold"
                 />
-                <span className="text-[22px] font-bold text-[#3A3A36]"></span>
               </div>
             </div>
           </div>

@@ -46,7 +46,7 @@
 @layer utilities {
   /* Scrollbar Styling */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
     border-radius: 20px;
   }
 
@@ -67,5 +67,27 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #ffe0b1; /* Slightly darker yellow on hover */
     cursor: grabbing;
+  }
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+}
+
+/* Mobile-specific styles */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
   }
 }
